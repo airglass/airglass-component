@@ -22,6 +22,4 @@ export {
   Renderer,
   Scene,
   Rect,
-  subscribe,
-  unSubscribe
 }

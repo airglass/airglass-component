@@ -1,43 +1,40 @@
-import DraggableShape from './DraggableShape';
+import Shape from './Shape';
 
-export default class Rect extends DraggableShape {
-  x: number = 0;
-  y: number = 0;
+export default class Rect extends Shape {
   width: number = 100;
   height: number = 100;
-  fillStyle: string = '#444';
 
   constructor(opts){
-    super();
+    super(opts);
     this.set(opts);
   }
   getHitPath(){
-    if(!this.hitPath){
+    if(!this._hitPath){
       this.updateHitPath();
     }
-    return this.hitPath;
+    return this._hitPath;
   }
   getDrawPath(){
-    if(!this.drawPath){
+    if(!this._drawPath){
       this.updateDrawPath();
     }
-    return this.drawPath;
+    return this._drawPath;
   }
   updateDrawPath(){
     let path = new Path2D();
     path.rect(this.x - this.width/2, this.y-this.height/2, this.width, this.height); 
-    this.drawPath = path;
+    this._drawPath = path;
   }
   updateHitPath(){
     let path = new Path2D();
     path.rect(this.x-this.width/2, this.y-this.height/2, this.width, this.height);
-    this.hitPath = path;
+    this._hitPath = path;
   }
   draw(ctx){
     if(!ctx) throw new Error('need ctx');
-    this.drawPath = this.getDrawPath();
+    this._drawPath = this.getDrawPath();
     ctx.fillStyle = this.fillStyle;
-    ctx.stroke(this.drawPath);
-    ctx.fill(this.drawPath);
+    ctx.stroke(this._drawPath);
+    ctx.fill(this._drawPath);
   }
 }
