@@ -17,4 +17,9 @@ export default class Element {
     };
     this._eventListeners.push(eventListener);
   }
+  set(opts){
+    for(let optName in opts){
+      this[optName] = opts[optName];
+    }
+  }
 }

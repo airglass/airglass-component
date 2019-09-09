@@ -73,12 +73,12 @@ export default class Shape extends Element {
         // 更新形状位置坐标
         this.x = _ShapePositionWhenMouseDown.x + e.layerX - _mouseDownPoint.x;
         this.y = _ShapePositionWhenMouseDown.y + e.layerY - _mouseDownPoint.y;
-        
-        // 更新形状绘制路径
-        this.updateDrawPath();
 
         // 更新形状感知事件的区域
         this.updateHitPath();
+
+        // 更新形状绘制路径
+        this.updateDrawPath();
 
         // Renderer实例的hit方法会接受并返回对象
         return {
@@ -91,10 +91,5 @@ export default class Shape extends Element {
       // 释放鼠标后更新状态
       _isMouseDown = false;
     })
-  }
-  set(opts){
-    for(let optName in opts){
-      this[optName] = opts[optName];
-    }
   }
 }

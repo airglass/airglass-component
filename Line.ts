@@ -1,14 +1,23 @@
+import Element from './Element';
 import Point from './Point';
 
-export default class Line {
-  constructor(public pointA: Point, public pointB: Point){
-    if (!pointA || !pointB) throw new Error('need two points');
+export default class Line extends Element {
+  pointA: Point = new Point(0, 0);
+  pointB: Point = new Point(100, 100);
+  drawPath;
+
+  constructor(){
+    super()
+    this.updateDrawPath();
   }
-  draw(ctx) {
-    if (!ctx) throw new Error('need context');
+  updateDrawPath(){
     let path = new Path2D();
     path.moveTo(this.pointA.x, this.pointA.y);
     path.lineTo(this.pointB.x, this.pointB.y);
-    ctx.stroke(path);
+    this.drawPath = path;
+  }
+  draw(ctx) {
+    if (!ctx) throw new Error('Line Need Context');
+    ctx.stroke(this.drawPath);
   }
 }

@@ -1,5 +1,8 @@
-export default class Renderer {
+import Glass from './Glass';
+
+export default class Renderer extends Glass {
   constructor(public ctx, public scene){
+    super();
     if(!ctx) throw new Error('need CanvasRenderingContext2D');
     if(!scene) throw new Error('need Scene');
     this._eventListener = this._eventListener.bind(this);
@@ -17,7 +20,20 @@ export default class Renderer {
     canvas.removeEventListener('mousemove', this._eventListener);
     canvas.removeEventListener('mouseup', this._eventListener);
   }
+  // 触发所有订阅了渲染器事件的事件处理器
+  // 包括原生事件 && 选中、删除元素等非原生合成事件
+  _emitSubscribers(e){
+    this.subscribers.forEach(subscriber => {
+      let info = {
+        eventName: e.type
+      };
+      subscriber(e, info)
+    })
+  }
   _eventListener(e){
+    this._emitSubscribers(e);
+
+    // 触发可以绑定在canvas上的事件处理器，如鼠标事件
     this._eventCallback(this._hit(e));
   }
   _eventCallback(listenersSaid){
@@ -56,8 +72,8 @@ export default class Renderer {
     // 过滤出所有需要交互的元素
     let interactableChildren = this.scene.children.filter(child => child.interactable);
 
-    // 遍历出所有需要触发交互的元素
-    let needEmitListenerChildren = interactableChildren.map(interactableChild => {
+    // 遍历出所有支持交互的元素
+    let supportedInteractionChildren = interactableChildren.map(interactableChild => {
       // 检测当前鼠标位置是否在
       let isPointInPath = this.ctx.isPointInPath(interactableChild.getHitPath(), e.layerX, e.layerY);
       let listenerOpts = [];
@@ -74,9 +90,12 @@ export default class Renderer {
         eventType: currentEventType,
         listeners: listeners
       };
-    }).filter(needInteractChild => {
-      return needInteractChild.listeners.length !== 0
     });
+
+    // 遍历出所有需要触发交互事件处理函数的元素
+    let needEmitListenerChildren = supportedInteractionChildren.filter(supportedInteractChild => {
+      return supportedInteractChild.listeners.length !== 0
+    })
 
     // 需要触发当前事件的元素数量
     let length = needEmitListenerChildren.length;
@@ -88,7 +107,11 @@ export default class Renderer {
 
     // 获取全部监听器的诉求，即交代一些事情
     let listenersSaid = topChild.listeners.map(listener => {
-      return listener.listener(e, this.scene)
+      let info = {
+        supportedInteractionChildren,
+        needEmitListenerChildren
+      }
+      return listener.listener(e, this.scene, info)
     }).filter(listenerSaid => listenerSaid);
 
     return listenersSaid
