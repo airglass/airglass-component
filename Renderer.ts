@@ -20,23 +20,21 @@ export default class Renderer {
   _eventListener(e){
     this._eventCallback(this._hit(e));
   }
-  _eventCallback(needInteractChildren){
-    if(!needInteractChildren) return;
-    let needInteractChildrenLength = needInteractChildren.length;
+  _eventCallback(listenersSaid){
+    if(!listenersSaid) return;
 
-    // 如果场景中没有需要交互的元素就直接返回
-    if(needInteractChildrenLength == 0) return;
+    // 有话要说的监听器的数量
+    let listenersSaidCount = listenersSaid.length;
+
+    // 如果没有有话要交代的监听器就直接返回
+    if(listenersSaidCount == 0) return;
 
     // 默认不渲染
     let needRender = false;
 
-    // 遍历所有需要交互的元素
-    needInteractChildren.forEach(needInteractChild => {
-      let listenerOpts = needInteractChild.listenerOpts;
-      listenerOpts.some(listenerOpt => {
-        // 谁最后设置该选项就听谁的
-        needRender = listenerOpt.needRender;
-      })
+    // 遍历所有有话要交到的渲染器，这些有话要说的监听器都是最上层的元素触发的
+    listenersSaid.forEach(listenerSaid => {
+      needRender = listenerSaid.needRender;
     })
 
     // 是否需要渲染场景
@@ -80,17 +78,19 @@ export default class Renderer {
       return needInteractChild.listeners.length !== 0
     });
 
-    console.log(needEmitListenerChildren)
+    // 需要触发当前事件的元素数量
+    let length = needEmitListenerChildren.length;
 
-    // 返回所有事件监听器的返回值的集合
-    // listenerOpts = eventListeners.map(eventListener => {
-      // let opts = eventListener.listener(e, this.scene);
-      // 一般listener都会返回undefined，所以需要过滤出有效的opt
-      // return opts;
-    // }).filter(listenerOpt => listenerOpt);
+    if(!length) return
 
-    return
+    // 按加入到场景中的顺序获取最后一个元素，即最上层的元素
+    let topChild = needEmitListenerChildren[length-1];
 
-    return needInteractChildren;
+    // 获取全部监听器的诉求，即交代一些事情
+    let listenersSaid = topChild.listeners.map(listener => {
+      return listener.listener(e, this.scene)
+    }).filter(listenerSaid => listenerSaid);
+
+    return listenersSaid
   }
 }
