@@ -10,12 +10,13 @@ export default class Shape extends Element {
   y: number = 0;
   
   // 有形的就颜色
-  fillStyle: string = '#999';
+  fillStyle: string = '#fff';
   strokeStyle: string = '#333';
+  lineWidth: number = 1;
   
-  constructor(opts){
+  constructor(opts?){
     super();
-    this.set(opts);
+    opts && this.set(opts);
 
     let isMouseDown = false;
      

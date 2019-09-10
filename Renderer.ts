@@ -1,4 +1,5 @@
 import Glass from './Glass';
+import Point from './Point';
 
 export default class Renderer extends Glass {
   _isMouseDown: boolean = false;
@@ -85,6 +86,15 @@ export default class Renderer extends Glass {
     for(let child of this.scene.children){
       child.draw && child.draw(this.ctx);
     }
+  }
+  getElementsConatinPoint(point: Point){
+    return this.scene.children.map(interactableChild => {
+      let isPointInPath = this.ctx.isPointInPath(interactableChild.path, point.x, point.y);
+      if(isPointInPath){
+        return interactableChild;
+      }
+      return;
+    }).filter(containPointElement => containPointElement);
   }
   // _hit只用来批量触发元素们的鼠标和触摸事件
   // 其他事件需要用订阅的手段订阅元素特定事件比如添加到场景中的事件/移除场景的事件等。

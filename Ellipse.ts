@@ -4,9 +4,9 @@ export default class Ellipse extends Shape {
   width: number = 100;
   height: number = 100;
 
-  constructor(opts){
-    super(opts);
-    this.set(opts);
+  constructor(opts?){
+    super();
+    opts && this.set(opts);
   }
   updatePath(){
     let path = new Path2D();
