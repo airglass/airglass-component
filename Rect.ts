@@ -34,6 +34,7 @@ export default class Rect extends Shape {
     if(!ctx) throw new Error('need ctx');
     this._drawPath = this.getDrawPath();
     ctx.fillStyle = this.fillStyle;
+    ctx.strokeStyle = this.strokeStyle;
     ctx.stroke(this._drawPath);
     ctx.fill(this._drawPath);
   }

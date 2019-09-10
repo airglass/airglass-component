@@ -1,8 +1,10 @@
-export default class Glass {
+import Event from './Event';
+
+export default class Glass extends Event {
   subscribers: Function[] = [];
 
   constructor(){
-
+    super();
   }
   subscribe(targetGlass: Glass, subscriber: Function){
     targetGlass.subscribers.push(subscriber);

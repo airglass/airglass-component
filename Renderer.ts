@@ -22,17 +22,14 @@ export default class Renderer extends Glass {
   }
   // 触发所有订阅了渲染器事件的事件处理器
   // 包括原生事件 && 选中、删除元素等非原生合成事件
-  _emitSubscribers(e){
-    this.subscribers.forEach(subscriber => {
-      let info = {
-        eventName: e.type
-      };
-      subscriber(e, info)
-    })
+  // actor指触发事件的演员
+  _emitSubscribers(actor){
+    this.subscribers.forEach(subscriber => subscriber(actor))
   }
   _eventListener(e){
-    this._emitSubscribers(e);
-
+    this.event = e;
+    // 全部是画布触发的事件
+    this._emitSubscribers(this);
     // 触发可以绑定在canvas上的事件处理器，如鼠标事件
     this._eventCallback(this._hit(e));
   }
@@ -50,6 +47,7 @@ export default class Renderer extends Glass {
 
     // 遍历所有有话要交到的渲染器，这些有话要说的监听器都是最上层的元素触发的
     listenersSaid.forEach(listenerSaid => {
+      console.log(listenerSaid)
       needRender = listenerSaid.needRender;
     })
 
@@ -67,53 +65,75 @@ export default class Renderer extends Glass {
   // _hit只用来批量触发元素们的鼠标和触摸事件
   // 其他事件需要用订阅的手段订阅元素特定事件比如添加到场景中的事件/移除场景的事件等。
   _hit(e){
+    // 当前事件类型
     let currentEventType = e.type;
 
-    // 过滤出所有需要交互的元素
-    let interactableChildren = this.scene.children.filter(child => child.interactable);
-
     // 遍历出所有支持交互的元素
-    let supportedInteractionChildren = interactableChildren.map(interactableChild => {
-      // 检测当前鼠标位置是否在
-      let isPointInPath = this.ctx.isPointInPath(interactableChild.getHitPath(), e.layerX, e.layerY);
-      let listenerOpts = [];
+    let supportedInteractionChildren = this.scene.children.map(interactableChild => {
+      // 用来存储监听当前元素当前事件类型的全部事件处理器
       let listeners = [];
+
+      // 检测当前鼠标是否落在每一个可交互的元素内
+      let isPointInPath = this.ctx.isPointInPath(interactableChild.getHitPath(), e.layerX, e.layerY);
+      
       if(isPointInPath){
-        // 遍历出所有包含当前事件类型的监听器
+        // 遍历出所有支持交互 && 鼠标落在元素绘制路径内 && 元素包含监听当前事件的事件处理器
         listeners = interactableChild._eventListeners.filter(eventListener => {
           return eventListener.eventType === currentEventType;
         });
       }
       // 返回需要交互的元素
       return {
+        // 当前元素
         instance: interactableChild,
+        // 当前事件类型
         eventType: currentEventType,
-        listeners: listeners
+        // 有可能是空数组，因为鼠标没有落在该元素内 || 没有检测到监听该元素当前事件类型的事件处理器
+        // 所以需要继续过滤掉空数组
+        listeners: listeners,
       };
     });
 
-    // 遍历出所有需要触发交互事件处理函数的元素
-    let needEmitListenerChildren = supportedInteractionChildren.filter(supportedInteractChild => {
-      return supportedInteractChild.listeners.length !== 0
-    })
+    // 过滤掉没有被监听当前事件类型的元素
+    // 最终得到那些需要触发当前事件类型的事件处理器的元素
+    let needEmitListenerChildren = supportedInteractionChildren.filter(child => child.listeners.length)
 
     // 需要触发当前事件的元素数量
     let length = needEmitListenerChildren.length;
 
-    if(!length) return
+    // 有可能不存在满足条件（支持交互 && 鼠标落在元素绘制路径内 && 有监听该元素当前事件类型的事件处理器）的元素
+    // 直接返回
+    if(!length) return;
 
-    // 按加入到场景中的顺序获取最后一个元素，即最上层的元素
+    // 继续过滤出顶层元素
+    // 按加入到场景中的顺序获取最后一个元素，也就是最上层的元素
+    // 满足条件的元素数量减去1，就能得到顶层元素
     let topChild = needEmitListenerChildren[length-1];
 
-    // 获取全部监听器的诉求，即交代一些事情
+    // 执行监听了最顶层元素的当前事件类型的全部事件处理器
+    // 得到所有事件监听器返回的诉求
     let listenersSaid = topChild.listeners.map(listener => {
-      let info = {
-        supportedInteractionChildren,
-        needEmitListenerChildren
-      }
-      return listener.listener(e, this.scene, info)
+      // 事件处理器当然也可以什么都不返回
+      // 所以下面需要过滤出有诉求的事件监听器
+      let said = listener.listener(
+        // 原生事件
+        e,
+        //当前渲染器
+        this,
+        // 其他帮助事件处理函数做出判断的信息
+        {
+          supportedInteractionChildren,
+          needEmitListenerChildren
+        }
+      );
+      return said;
     }).filter(listenerSaid => listenerSaid);
 
+    // 触发事件订阅者的订阅处理器
+    this._emitSubscribers(topChild.instance)
+
+    // 返回监听器的诉求
+    // 可能都没有诉求，返回的事空数组 []
     return listenersSaid
   }
 }

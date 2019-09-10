@@ -3,6 +3,7 @@ import Scene from './Scene';
 import Rect from './Rect';
 import Ellipse from './Ellipse';
 import ModuleLine from './ModuleLine';
+import Point from './Point';
 
 export {
   Renderer,
@@ -10,4 +11,5 @@ export {
   Rect,
   Ellipse,
   ModuleLine,
+  Point,
 }
