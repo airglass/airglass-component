@@ -2,6 +2,7 @@ import Event from './Event';
 
 export default class Glass extends Event {
   subscribers: Function[] = [];
+  extends: string = 'Glass';
 
   constructor(){
     super();

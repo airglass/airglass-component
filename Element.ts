@@ -11,6 +11,8 @@ export default class Element extends Event {
   // 全部事件监听器
   _eventListeners: EventListener[] = [];
 
+  extends: string = 'Element';
+
   constructor(){
     super();
   }
@@ -30,9 +32,9 @@ export default class Element extends Event {
       }
     }
   }
-  set(opts){
-    for(let optName in opts){
-      this[optName] = opts[optName];
-    }
+  // 移除元素
+  // 释放资源
+  destroy(){
+
   }
 }

@@ -1,6 +1,8 @@
 import Glass from './Glass';
 
 export default class Renderer extends Glass {
+  _isMouseDown: boolean = false;
+
   constructor(public ctx, public scene){
     super();
     if(!ctx) throw new Error('need CanvasRenderingContext2D');
@@ -27,7 +29,29 @@ export default class Renderer extends Glass {
     this.subscribers.forEach(subscriber => subscriber(actor))
   }
   _eventListener(e){
-    this.event = e;
+
+    this.event = {
+      extends: this.extends,
+      x: e.layerX,
+      y: e.layerY,
+    };
+
+    switch(e.type){
+      case 'mousedown':
+        this._isMouseDown = true;
+        this.event.type = 'touchstart';
+        break;
+      case 'mousemove':
+        this.event.type = 'mousemove';
+        if(this._isMouseDown){
+          this.event.type = 'touchmove';
+        }
+        break;
+      case 'mouseup':
+        this._isMouseDown = false;
+        this.event.type = 'touchend';
+        break
+    }
     // 全部是画布触发的事件
     this._emitSubscribers(this);
     // 触发可以绑定在canvas上的事件处理器，如鼠标事件
@@ -69,12 +93,13 @@ export default class Renderer extends Glass {
     let currentEventType = e.type;
 
     // 遍历出所有支持交互的元素
+    // 默认所有元素都支持交互
     let supportedInteractionChildren = this.scene.children.map(interactableChild => {
       // 用来存储监听当前元素当前事件类型的全部事件处理器
       let listeners = [];
 
       // 检测当前鼠标是否落在每一个可交互的元素内
-      let isPointInPath = this.ctx.isPointInPath(interactableChild.getHitPath(), e.layerX, e.layerY);
+      let isPointInPath = this.ctx.isPointInPath(interactableChild.path, e.layerX, e.layerY);
       
       if(isPointInPath){
         // 遍历出所有支持交互 && 鼠标落在元素绘制路径内 && 元素包含监听当前事件的事件处理器
