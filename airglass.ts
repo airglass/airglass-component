@@ -5,6 +5,7 @@ import Ellipse from './Ellipse';
 import ModuleLine from './ModuleLine';
 import Point from './Point';
 import Module from './module';
+import Polygon from './Polygon';
 
 export {
   Renderer,
@@ -14,4 +15,5 @@ export {
   ModuleLine,
   Point,
   Module,
+  Polygon,
 }

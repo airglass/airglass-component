@@ -10,13 +10,13 @@ export default class Shape extends Element {
   y: number = 0;
   
   // 有形的就颜色
-  fillStyle: string = '#fff';
-  strokeStyle: string = '#333';
-  lineWidth: number = 1;
+  fillStyle: string = 'hsla(0, 0%, 100%, .5)';
+  strokeStyle: string = '#fff';
+  lineWidth: number = 2;
   
   constructor(opts?){
     super();
-    opts && this.set(opts);
+    this.set(opts);
 
     let isMouseDown = false;
      
@@ -67,6 +67,7 @@ export default class Shape extends Element {
   }
   updatePath(){}
   set(opts){
+    if(!opts) return;
     for(let optName in opts){
       this[optName] = opts[optName];
     }

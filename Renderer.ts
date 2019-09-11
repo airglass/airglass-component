@@ -87,7 +87,7 @@ export default class Renderer extends Glass {
       child.draw && child.draw(this.ctx);
     }
   }
-  getElementsConatinPoint(point: Point){
+  getElementsContainPoint(point: Point){
     return this.scene.children.map(interactableChild => {
       let isPointInPath = this.ctx.isPointInPath(interactableChild.path, point.x, point.y);
       if(isPointInPath){
