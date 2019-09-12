@@ -16,12 +16,14 @@ export default class Renderer extends Glass {
     canvas.addEventListener('mousedown', this._eventListener);
     canvas.addEventListener('mousemove', this._eventListener);
     canvas.addEventListener('mouseup', this._eventListener);
+    return this;
   }
   offInteractable(){
     let canvas = this.ctx.canvas;
     canvas.removeEventListener('mousedown', this._eventListener);
     canvas.removeEventListener('mousemove', this._eventListener);
     canvas.removeEventListener('mouseup', this._eventListener);
+    return this;
   }
   // 触发所有订阅了渲染器事件的事件处理器
   // 包括原生事件 && 选中、删除元素等非原生合成事件
