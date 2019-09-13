@@ -25,6 +25,10 @@ export default class Renderer extends Glass {
     canvas.removeEventListener('mouseup', this._eventListener);
     return this;
   }
+  clean(){
+    this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+    return this;
+  }
   // 触发所有订阅了渲染器事件的事件处理器
   // 包括原生事件 && 选中、删除元素等非原生合成事件
   // actor指触发事件的演员

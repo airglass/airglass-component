@@ -6,6 +6,7 @@ import ModuleLine from './ModuleLine';
 import Point from './Point';
 import Module from './module';
 import Polygon from './Polygon';
+import Line from './Line';
 
 export {
   Renderer,
@@ -16,4 +17,5 @@ export {
   Point,
   Module,
   Polygon,
+  Line,
 }

@@ -2,25 +2,25 @@ import Element from './Element';
 import Point from './Point';
 
 export default class Line extends Element {
-  drawPath;
+  path;
 
   strokeStyle: string = '#666';
   lineWidth: number = 2;
 
   constructor(public startPoint: Point = new Point(0, 0), public endPoint: Point = new Point(0, 0)){
     super()
-    this.updateDrawPath();
   }
-  updateDrawPath(){
+  updatePath(){
     let path = new Path2D();
     path.moveTo(this.startPoint.x, this.startPoint.y);
-    path.lineTo(this.startPoint.x, this.startPoint.y);
-    this.drawPath = path;
+    path.lineTo(this.endPoint.x, this.endPoint.y);
+    this.path = path;
   }
   draw(ctx) {
     if (!ctx) throw new Error('Line Need Context');
+    console.log(ctx)
     ctx.strokeStyle = this.strokeStyle;
     ctx.lineWidth = this.lineWidth;
-    ctx.stroke(this.drawPath);
+    ctx.stroke(this.path);
   }
 }
