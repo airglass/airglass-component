@@ -1,8 +1,7 @@
-export default function max(values) {
-  let max;
-  for (const value of values) {
-    if (value != null
-        && (max < value || (max === undefined && value >= value))) {
+export default function max(array: Array<number>): number {
+  let max: number = -1;
+  for (const value of array) {
+    if (value != null && (max < value || (max == -1 && value >= value))) {
       max = value;
     }
   }

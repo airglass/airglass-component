@@ -8,18 +8,20 @@ import Polygon from './Polygon';
 import Ellipse from './Ellipse';
 import Module from './Module';
 
-import Line from './Line';
 import Point from './Point';
+import Line from './Line';
 import BezierLine from './BezierLine';
 
 export {
   Renderer,
   Scene,
+
   Rect,
-  Ellipse,
-  BezierLine,
-  Point,
-  Module,
   Polygon,
+  Ellipse,
+  Module,
+
+  Point,
   Line,
+  BezierLine,
 }

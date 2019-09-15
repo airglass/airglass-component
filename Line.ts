@@ -1,15 +1,17 @@
-import Element from './Element';
 import Point from './Point';
 
-export default class Line extends Element {
-  path: Path2D = new Path2D;
-  strokeStyle: string = '#666';
-  lineWidth: number = 2;
+export default class Line {
+  path: Path2D;
+  strokeStyle: string;
+  lineWidth: number;
   
   constructor(
     public startPoint: Point = new Point(0, 0),
     public endPoint: Point = new Point(0, 0)){
-    super();
+
+    this.path = new Path2D;
+    this.strokeStyle = '#666';
+    this.lineWidth = 2;
   }
   updatePath(){
     let path: Path2D = new Path2D();

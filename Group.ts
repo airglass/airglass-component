@@ -1,9 +1,11 @@
 import Element from './Element';
 
 export default class Group {
-  children: Array<Element> = [];
+  children: Array<Element>;
 
-  constructor(){}
+  constructor(){
+    this.children = [];
+  }
   // 可以一次性添加多个
   add(){
     let children: Array<Element> = [].slice.call(arguments, 0);

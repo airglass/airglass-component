@@ -8,13 +8,17 @@ interface EventListener {
 
 export default class Element extends Event {
   // 全部事件监听器
-  _eventListeners: EventListener[] = [];
-  extends: string = 'Element';
-  path: Path2D = new Path2D;
+  _eventListeners: EventListener[];
+  extends: string;
+  path: Path2D;
   
   constructor(opts?: any){
     super();
     this.set(opts);
+
+    this._eventListeners = [];
+    this.extends = 'Element';
+    this.path = new Path2D;
   }
   // 只能监听 mousedown | mousemove | mouseup
   on(type: string, listener: Function){
@@ -32,8 +36,8 @@ export default class Element extends Event {
       }
     }
   }
-  // 释放
   destroy(){}
+  draw(ctx: CanvasRenderingContext2D){}
   set(opts: any){
     if(!opts) return;
     for(let optName in opts){

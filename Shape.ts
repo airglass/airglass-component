@@ -3,15 +3,22 @@ import Renderer from './Renderer';
 
 export default class Shape extends Element {
   // 有形的就有确定的位置
-  x: number = 0;
-  y: number = 0;
+  x: number;
+  y: number;
   // 有形的就颜色
-  fillStyle: string = 'hsla(0, 0%, 100%, .5)';
-  strokeStyle: string = '#fff';
-  lineWidth: number = 2;
+  fill: string;
+  stroke: string;
+  lineWidth: number;
   
   constructor(opts: any){
     super(opts);
+
+    this.x = opts.x || 0;
+    this.y = opts.x || 0;
+    this.fill = opts.fill || 'hsla(0, 0%, 100%, .5)';
+    this.stroke = opts.stroke || '#fff';
+    this.lineWidth = opts.lineWidth || 2;
+
     let isMouseDown: boolean = false;
     
     // 在元素内按下鼠标
@@ -49,7 +56,6 @@ export default class Shape extends Element {
     // 在元素内抬起鼠标
     this.on('mouseup', (e: any) => {
       isMouseDown = false;
-
       this.event = {
         type: 'touchend',
         extends: this.extends,

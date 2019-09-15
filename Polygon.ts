@@ -4,27 +4,39 @@ import min from './utils/min';
 import max from './utils/max';
 
 export default class Polygon extends Shape {
-  points;
-  x;
-  y;
-  width;
-  height;
-  minX;
-  minY;
-  maxX;
-  maxY;
+  points: Array<Point>;
+  width: number | undefined;
+  height: number | undefined;
+  minX: number | undefined;
+  minY: number | undefined;
+  maxX: number | undefined;
+  maxY: number | undefined;
 
-  constructor(opts: any){
+  constructor(opts: any) {
     super(opts);
+
+    this.points = opts.points || [];
   }
-  addPoint(point: Point){
+  addPoint(point: Point) {
     this.points.push(point);
     this.updatePath();
   }
-  _updateBounding(){
+  updatePath() {
+    if (!this.points || this.points.length == 0) return;
+    let path: Path2D = new Path2D();
+    for (let i = 0; i < this.points.length; i++) {
+      let point: Point = this.points[i];
+      if (i == 0) {
+        path.moveTo(point.x, point.y);
+        continue;
+      }
+      path.lineTo(point.x, point.y);
+    }
+    this.path = path;
+
     let x: Array<number> = [];
     let y: Array<number> = [];
-    for(let i = 0; i < this.points.length; i++){
+    for (let i = 0; i < this.points.length; i++) {
       let point = this.points[i];
       x.push(point.x);
       y.push(point.y);
@@ -38,24 +50,10 @@ export default class Polygon extends Shape {
     this.x = this.minX + this.width / 2;
     this.y = this.minY + this.height / 2;
   }
-  updatePath(){
-    if(!this.points || this.points.length == 0) return;
-    let path: Path2D = new Path2D();
-    for(let i = 0; i < this.points.length; i++){
-      let point: Point = this.points[i];
-      if(i == 0){
-        path.moveTo(point.x, point.y);
-        continue;
-      }
-      path.lineTo(point.x, point.y);
-    }
-    this.path = path;
-    this._updateBounding();
-  }
-  draw(ctx: CanvasRenderingContext2D){
-    if(!this.path) return;
-    ctx.fillStyle = this.fillStyle;
-    ctx.strokeStyle = this.strokeStyle;
+  draw(ctx: CanvasRenderingContext2D) {
+    if (!this.path) return;
+    ctx.fillStyle = this.fill;
+    ctx.strokeStyle = this.stroke;
     ctx.lineWidth = this.lineWidth;
     ctx.stroke(this.path);
     ctx.fill(this.path);

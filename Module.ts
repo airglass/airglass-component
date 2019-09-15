@@ -2,18 +2,25 @@ import Rect from './Rect';
 import Ellipse from './Ellipse';
 
 export default class Module extends Rect {
-  imports: Array<Ellipse> = [];
-  exports: Array<Ellipse> = [];
-  name: string = '';
-  textStyle: string = '#fff';
-  fontSize: number = 12;
-  r: number = 0;
+  imports: Array<Ellipse>;
+  exports: Array<Ellipse>;
+  name: string;
+  nameFillStyle: string;
+  nameFontSize: number;
+  r: number;
 
   constructor(opts: any) {
     super(opts);
+
+    this.imports = opts.imports || [];
+    this.exports = opts.exports || [];
+    this.name = opts.name || '';
+    this.nameFillStyle = opts.nameFillStyle || '#fff';
+    this.nameFontSize = opts.nameFontSize || 12;
+    this.r = opts.r || 0;
   }
   updatePath() {
-    let path: Path2D = new Path2D();
+    let path: Path2D = new Path2D;
     let r2 = this.r * 2;
     path.moveTo(this.x + this.width / 2, this.y);
     path.lineTo(this.x + this.width - r2, this.y);
@@ -46,21 +53,21 @@ export default class Module extends Rect {
   }
   setText(ctx: CanvasRenderingContext2D, text: string) {
     this.name = text;
-    ctx.font = `${this.fontSize * devicePixelRatio}px 微软雅黑`;
+    ctx.font = `${this.nameFontSize * devicePixelRatio}px 微软雅黑`;
     let measureWidth = ctx.measureText(text).width;
     this.width = parseInt('' + measureWidth);
   }
   draw(ctx: CanvasRenderingContext2D) {
     if (!ctx) throw new Error('need ctx');
 
-    ctx.fillStyle = this.fillStyle;
-    ctx.strokeStyle = this.strokeStyle;
+    ctx.fillStyle = this.fill;
+    ctx.strokeStyle = this.stroke;
     ctx.lineWidth = this.lineWidth;
     ctx.stroke(this.path);
     ctx.fill(this.path);
 
-    ctx.font = `${this.fontSize * devicePixelRatio}px 微软雅黑`;
-    ctx.fillStyle = this.strokeStyle;
+    ctx.font = `${this.nameFontSize * devicePixelRatio}px 微软雅黑`;
+    ctx.fillStyle = this.nameFillStyle;
     ctx.textBaseline = 'middle';
     ctx.textAlign = 'center';
     ctx.fillText(this.name, this.x + this.width / 2, this.y + this.height / 2)

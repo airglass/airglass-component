@@ -1,11 +1,14 @@
 import Shape from './Shape';
 
 export default class Ellipse extends Shape {
-  width: number = 100;
-  height: number = 100;
+  width: number;
+  height: number;
 
-  constructor(opts){
+  constructor(opts: any){
     super(opts);
+
+    this.width = opts.width || 100;
+    this.height = opts.height || 100;
   }
   updatePath(){
     let path: Path2D = new Path2D();
@@ -14,10 +17,10 @@ export default class Ellipse extends Shape {
   }
   draw(ctx: CanvasRenderingContext2D){
     if(!ctx) throw new Error('need ctx');
-    ctx.fillStyle = this.fillStyle;
-    if(this.strokeStyle){
+    ctx.fillStyle = this.fill;
+    if(this.stroke){
       ctx.stroke(this.path);
-      ctx.strokeStyle = this.strokeStyle; 
+      ctx.strokeStyle = this.stroke;
     }
     ctx.lineWidth = this.lineWidth;
     ctx.fill(this.path);

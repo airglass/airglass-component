@@ -6,10 +6,14 @@ import Element from './Element';
 export default class Renderer extends Glass {
   _isMouseDown: boolean = false;
 
-  constructor(public ctx: CanvasRenderingContext2D, public scene: Scene){
+  constructor(
+    public ctx: CanvasRenderingContext2D,
+    public scene: Scene){
     super();
+
     if(!ctx) throw new Error('need CanvasRenderingContext2D');
     if(!scene) throw new Error('need Scene');
+
     this._eventListener = this._eventListener.bind(this);
   }
   // mousedown/mousemove/mouseup
@@ -155,7 +159,7 @@ export default class Renderer extends Glass {
 
     // 执行监听了最顶层元素的当前事件类型的全部事件处理器
     // 得到所有事件监听器返回的诉求
-    let listenersSaid = topChild.listeners.map(listener => {
+    let listenersSaid = topChild.listeners.map((listener: any) => {
       // 事件处理器当然也可以什么都不返回
       // 所以下面需要过滤出有诉求的事件监听器
       let said = listener.listener(
