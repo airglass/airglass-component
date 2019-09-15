@@ -1,29 +1,22 @@
 import Element from './Element';
+import Renderer from './Renderer';
 
-// 有形的继承无形的
 export default class Shape extends Element {
-  // 有形的轮廓路径
-  path;
-
   // 有形的就有确定的位置
   x: number = 0;
   y: number = 0;
-  
   // 有形的就颜色
   fillStyle: string = 'hsla(0, 0%, 100%, .5)';
   strokeStyle: string = '#fff';
   lineWidth: number = 2;
   
-  constructor(opts?){
-    super();
-    this.set(opts);
-
-    let isMouseDown = false;
-     
+  constructor(opts: any){
+    super(opts);
+    let isMouseDown: boolean = false;
+    
     // 在元素内按下鼠标
-    this.on('mousedown', (e, renderer) => {
+    this.on('mousedown', (e: any, renderer: Renderer) => {
       isMouseDown = true;
-
       this.event = {
         type: 'touchstart',
         extends: this.extends,  
@@ -33,7 +26,7 @@ export default class Shape extends Element {
     })
 
     // 在元素内移动鼠标
-    this.on('mousemove', e => {
+    this.on('mousemove', (e: any) => {
       // 在元素内移动鼠标
       this.event = {
         type: 'mousemove',
@@ -54,7 +47,7 @@ export default class Shape extends Element {
     })
 
     // 在元素内抬起鼠标
-    this.on('mouseup', e => {
+    this.on('mouseup', (e: any) => {
       isMouseDown = false;
 
       this.event = {

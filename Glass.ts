@@ -11,8 +11,8 @@ export default class Glass extends Event {
     targetGlass.subscribers.push(subscriber);
   }
   unSubscribe(targetGlass: Glass, subscriber: Function){
-    for(let i=0; i<targetGlass.subscribers.length; i++){
-      let subscriber = targetGlass.subscribers[i];
+    for(let i = 0; i < targetGlass.subscribers.length; i++){
+      let subscriber: Function = targetGlass.subscribers[i];
       if(subscriber === subscriber){
         targetGlass.subscribers.splice(i, 1);
       }

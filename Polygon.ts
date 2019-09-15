@@ -14,7 +14,7 @@ export default class Polygon extends Shape {
   maxX;
   maxY;
 
-  constructor(opts){
+  constructor(opts: any){
     super(opts);
   }
   addPoint(point: Point){
@@ -22,9 +22,9 @@ export default class Polygon extends Shape {
     this.updatePath();
   }
   _updateBounding(){
-    let x: any = [];
-    let y: any = [];
-    for(let i=0; i<this.points.length; i++){
+    let x: Array<number> = [];
+    let y: Array<number> = [];
+    for(let i = 0; i < this.points.length; i++){
       let point = this.points[i];
       x.push(point.x);
       y.push(point.y);
@@ -40,9 +40,9 @@ export default class Polygon extends Shape {
   }
   updatePath(){
     if(!this.points || this.points.length == 0) return;
-    let path = new Path2D();
-    for(let i=0; i<this.points.length; i++){
-      let point = this.points[i];
+    let path: Path2D = new Path2D();
+    for(let i = 0; i < this.points.length; i++){
+      let point: Point = this.points[i];
       if(i == 0){
         path.moveTo(point.x, point.y);
         continue;
@@ -52,7 +52,7 @@ export default class Polygon extends Shape {
     this.path = path;
     this._updateBounding();
   }
-  draw(ctx){
+  draw(ctx: CanvasRenderingContext2D){
     if(!this.path) return;
     ctx.fillStyle = this.fillStyle;
     ctx.strokeStyle = this.strokeStyle;

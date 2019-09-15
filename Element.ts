@@ -2,19 +2,19 @@ import Event from './Event';
 
 interface EventListener {
   // 监听的事件类型
-  eventType: String;
+  eventType: string;
   listener: Function;
 }
 
-// 无形的也能感知事件
 export default class Element extends Event {
   // 全部事件监听器
   _eventListeners: EventListener[] = [];
-
   extends: string = 'Element';
-
-  constructor(){
+  path: Path2D = new Path2D;
+  
+  constructor(opts?: any){
     super();
+    this.set(opts);
   }
   // 只能监听 mousedown | mousemove | mouseup
   on(type: string, listener: Function){
@@ -26,18 +26,15 @@ export default class Element extends Event {
   }
   off(type: string, listener: Function){
     for(let i=0; i<this._eventListeners.length; i++){
-      let currentListener = this._eventListeners[i];
+      let currentListener: EventListener = this._eventListeners[i];
       if(currentListener.eventType === type && currentListener.listener === listener){
         return this._eventListeners.splice(i, 1);
       }
     }
   }
-  // 移除元素
-  // 释放资源
-  destroy(){
-
-  }
-  set(opts?){
+  // 释放
+  destroy(){}
+  set(opts: any){
     if(!opts) return;
     for(let optName in opts){
       this[optName] = opts[optName];

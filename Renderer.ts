@@ -1,10 +1,12 @@
 import Glass from './Glass';
 import Point from './Point';
+import Scene from './Scene';
+import Element from './Element';
 
 export default class Renderer extends Glass {
   _isMouseDown: boolean = false;
 
-  constructor(public ctx, public scene){
+  constructor(public ctx: CanvasRenderingContext2D, public scene: Scene){
     super();
     if(!ctx) throw new Error('need CanvasRenderingContext2D');
     if(!scene) throw new Error('need Scene');
@@ -19,7 +21,7 @@ export default class Renderer extends Glass {
     return this;
   }
   offInteractable(){
-    let canvas = this.ctx.canvas;
+    let canvas: HTMLCanvasElement = this.ctx.canvas;
     canvas.removeEventListener('mousedown', this._eventListener);
     canvas.removeEventListener('mousemove', this._eventListener);
     canvas.removeEventListener('mouseup', this._eventListener);
@@ -32,10 +34,10 @@ export default class Renderer extends Glass {
   // 触发所有订阅了渲染器事件的事件处理器
   // 包括原生事件 && 选中、删除元素等非原生合成事件
   // actor指触发事件的演员
-  _emitSubscribers(actor){
+  _emitSubscribers(actor: Element | Glass){
     this.subscribers.forEach(subscriber => subscriber(actor))
   }
-  _eventListener(e){
+  _eventListener(e: any){
 
     this.event = {
       extends: this.extends,
@@ -64,7 +66,7 @@ export default class Renderer extends Glass {
     // 触发可以绑定在canvas上的事件处理器，如鼠标事件
     this._eventCallback(this._hit(e));
   }
-  _eventCallback(listenersSaid){
+  _eventCallback(listenersSaid: any){
     if(!listenersSaid) return;
 
     // 有话要说的监听器的数量
@@ -112,7 +114,7 @@ export default class Renderer extends Glass {
     // 默认所有元素都支持交互
     let supportedInteractionChildren = this.scene.children.map(interactableChild => {
       // 用来存储监听当前元素当前事件类型的全部事件处理器
-      let listeners = [];
+      let listeners: any;
 
       // 检测当前鼠标是否落在每一个可交互的元素内
       let isPointInPath = this.ctx.isPointInPath(interactableChild.path, e.layerX * devicePixelRatio, e.layerY * devicePixelRatio);
