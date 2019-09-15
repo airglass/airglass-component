@@ -14,7 +14,7 @@ export default class Shape extends Element {
     super(opts);
 
     this.x = opts.x || 0;
-    this.y = opts.x || 0;
+    this.y = opts.y || 0;
     this.fill = opts.fill || 'hsla(0, 0%, 100%, .5)';
     this.stroke = opts.stroke || '#fff';
     this.lineWidth = opts.lineWidth || 2;
@@ -26,7 +26,7 @@ export default class Shape extends Element {
       isMouseDown = true;
       this.event = {
         type: 'touchstart',
-        extends: this.extends,  
+        extends: this.extends,
         x: e.layerX * devicePixelRatio,
         y: e.layerY * devicePixelRatio,
       }

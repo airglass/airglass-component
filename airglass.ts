@@ -12,6 +12,9 @@ import Point from './Point';
 import Line from './Line';
 import BezierLine from './BezierLine';
 
+import min from './utils/min';
+import max from './utils/max';
+
 export {
   Renderer,
   Scene,
@@ -24,4 +27,7 @@ export {
   Point,
   Line,
   BezierLine,
+
+  min,
+  max,
 }

@@ -5,7 +5,7 @@ export default class Module extends Rect {
   imports: Array<Ellipse>;
   exports: Array<Ellipse>;
   name: string;
-  nameFillStyle: string;
+  nameFill: string;
   nameFontSize: number;
   r: number;
 
@@ -15,7 +15,7 @@ export default class Module extends Rect {
     this.imports = opts.imports || [];
     this.exports = opts.exports || [];
     this.name = opts.name || '';
-    this.nameFillStyle = opts.nameFillStyle || '#fff';
+    this.nameFill = opts.nameFill || '#fff';
     this.nameFontSize = opts.nameFontSize || 12;
     this.r = opts.r || 0;
   }
@@ -51,11 +51,10 @@ export default class Module extends Rect {
     this.path = path;
     return this;
   }
-  setText(ctx: CanvasRenderingContext2D, text: string) {
-    this.name = text;
-    ctx.font = `${this.nameFontSize * devicePixelRatio}px 微软雅黑`;
-    let measureWidth = ctx.measureText(text).width;
-    this.width = parseInt('' + measureWidth);
+  getTextWidth(ctx: CanvasRenderingContext2D) {
+    ctx.font = `${this.nameFontSize}px sans-serif`;
+    let measureWidth = ctx.measureText(this.name).width;
+    return parseInt('' + measureWidth);
   }
   draw(ctx: CanvasRenderingContext2D) {
     if (!ctx) throw new Error('need ctx');
@@ -66,8 +65,8 @@ export default class Module extends Rect {
     ctx.stroke(this.path);
     ctx.fill(this.path);
 
-    ctx.font = `${this.nameFontSize * devicePixelRatio}px 微软雅黑`;
-    ctx.fillStyle = this.nameFillStyle;
+    ctx.font = `${this.nameFontSize}px sans-serif`;
+    ctx.fillStyle = this.nameFill;
     ctx.textBaseline = 'middle';
     ctx.textAlign = 'center';
     ctx.fillText(this.name, this.x + this.width / 2, this.y + this.height / 2)
