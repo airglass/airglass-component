@@ -37,4 +37,10 @@ export default class Element extends Event {
   destroy(){
 
   }
+  set(opts?){
+    if(!opts) return;
+    for(let optName in opts){
+      this[optName] = opts[optName];
+    }
+  }
 }

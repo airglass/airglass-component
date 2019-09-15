@@ -39,8 +39,8 @@ export default class Renderer extends Glass {
 
     this.event = {
       extends: this.extends,
-      x: e.layerX,
-      y: e.layerY,
+      x: e.layerX * devicePixelRatio,
+      y: e.layerY * devicePixelRatio,
     };
 
     switch(e.type){
@@ -115,7 +115,7 @@ export default class Renderer extends Glass {
       let listeners = [];
 
       // 检测当前鼠标是否落在每一个可交互的元素内
-      let isPointInPath = this.ctx.isPointInPath(interactableChild.path, e.layerX, e.layerY);
+      let isPointInPath = this.ctx.isPointInPath(interactableChild.path, e.layerX * devicePixelRatio, e.layerY * devicePixelRatio);
       
       if(isPointInPath){
         // 遍历出所有支持交互 && 鼠标落在元素绘制路径内 && 元素包含监听当前事件的事件处理器

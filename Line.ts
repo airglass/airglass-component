@@ -18,7 +18,7 @@ export default class Line extends Element {
   }
   draw(ctx) {
     if (!ctx) throw new Error('Line Need Context');
-    console.log(ctx)
+    if(!this.path) return;
     ctx.strokeStyle = this.strokeStyle;
     ctx.lineWidth = this.lineWidth;
     ctx.stroke(this.path);

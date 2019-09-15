@@ -26,9 +26,9 @@ export default class Shape extends Element {
 
       this.event = {
         type: 'touchstart',
-        extends: this.extends,
-        x: e.layerX,
-        y: e.layerY,
+        extends: this.extends,  
+        x: e.layerX * devicePixelRatio,
+        y: e.layerY * devicePixelRatio,
       }
     })
 
@@ -38,8 +38,8 @@ export default class Shape extends Element {
       this.event = {
         type: 'mousemove',
         extends: this.extends,
-        x: e.layerX,
-        y: e.layerY,
+        x: e.layerX * devicePixelRatio,
+        y: e.layerY * devicePixelRatio,
       };
 
       // 在元素内按下并移动鼠标
@@ -47,8 +47,8 @@ export default class Shape extends Element {
         this.event = {
           type: 'touchmove',
           extends: this.extends,
-          x: e.layerX,
-          y: e.layerY,
+          x: e.layerX * devicePixelRatio,
+          y: e.layerY * devicePixelRatio,
         };
       }
     })
@@ -60,17 +60,9 @@ export default class Shape extends Element {
       this.event = {
         type: 'touchend',
         extends: this.extends,
-        x: e.layerX,
-        y: e.layerY,
+        x: e.layerX * devicePixelRatio,
+        y: e.layerY * devicePixelRatio,
       };
     })
-  }
-  updatePath(){}
-  set(opts){
-    if(!opts) return;
-    for(let optName in opts){
-      this[optName] = opts[optName];
-    }
-    this.updatePath();
   }
 }

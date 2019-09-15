@@ -16,9 +16,11 @@ export default class Ellipse extends Shape {
   draw(ctx){
     if(!ctx) throw new Error('need ctx');
     ctx.fillStyle = this.fillStyle;
-    ctx.strokeStyle = this.strokeStyle;
+    if(this.strokeStyle){
+      ctx.stroke(this.path);
+      ctx.strokeStyle = this.strokeStyle; 
+    }
     ctx.lineWidth = this.lineWidth;
-    ctx.stroke(this.path);
     ctx.fill(this.path);
   }
 }

@@ -1,47 +1,15 @@
 import Shape from './Shape';
 
 export default class Rect extends Shape {
-  width: number = 100;
+  width: number = 10;
   height: number = 100;
-  rx: number = 0;
-  ry: number = 0;
 
-  constructor(opts?){
-    super();
-    opts && this.set(opts);
+  constructor(opts){
+    super(opts);
   }
   updatePath(){
     let path = new Path2D();
-    if(this.rx == 0 && this.ry == 0){
-      path.rect(this.x - this.width / 2, this.y - this.height / 2, this.width, this.height);
-    }else{
-      path.moveTo(this.x, this.y - this.height / 2);
-      path.lineTo(this.x + this.width / 2 - this.rx * 2, this.y - this.height / 2);
-      path.bezierCurveTo(
-        this.x + this.width / 2 - this.rx, this.y - this.height / 2,
-        this.x + this.width / 2, this.y - this.height / 2 + this.ry,
-        this.x + this.width / 2, this.y - this.height / 2 + this.ry * 2
-      );
-      path.lineTo(this.x + this.width / 2, this.y + this.height / 2 - this.ry * 2);
-      path.bezierCurveTo(
-        this.x + this.width / 2, this.y + this.height / 2 - this.ry,
-        this.x + this.width / 2 - this.rx, this.y + this.height / 2,
-        this.x + this.width / 2 - this.rx * 2, this.y + this.height / 2
-      );
-      path.lineTo(this.x - this.width / 2 + this.rx * 2, this.y + this.height / 2);
-      path.bezierCurveTo(
-        this.x - this.width / 2 + this.rx, this.y + this.height / 2,
-        this.x - this.width / 2, this.y + this.height / 2 - this.ry,
-        this.x - this.width / 2, this.y + this.height / 2 - this.ry * 2,
-      );
-      path.lineTo(this.x - this.width / 2, this.y - this.height / 2 + this.ry * 2);
-      path.bezierCurveTo(
-        this.x - this.width / 2, this.y - this.height / 2 + this.ry,
-        this.x - this.width / 2 + this.rx, this.y - this.height / 2,
-        this.x - this.width / 2 + this.rx * 2, this.y - this.height / 2
-      );
-      path.closePath();
-    }
+    path.rect(this.x, this.y, this.width, this.height);
     this.path = path;
   }
   draw(ctx){
