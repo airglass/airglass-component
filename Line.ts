@@ -2,7 +2,7 @@ import Point from './Point';
 
 export default class Line {
   path: Path2D;
-  strokeStyle: string;
+  stroke: string;
   lineWidth: number;
   
   constructor(
@@ -10,7 +10,7 @@ export default class Line {
     public endPoint: Point = new Point(0, 0)){
 
     this.path = new Path2D;
-    this.strokeStyle = '#666';
+    this.stroke = '#333';
     this.lineWidth = 2;
   }
   updatePath(){
@@ -22,7 +22,7 @@ export default class Line {
   draw(ctx: CanvasRenderingContext2D) {
     if (!ctx) throw new Error('Line Need Context');
     if(!this.path) return;
-    ctx.strokeStyle = this.strokeStyle;
+    ctx.strokeStyle = this.stroke;
     ctx.lineWidth = this.lineWidth;
     ctx.stroke(this.path);
   }
