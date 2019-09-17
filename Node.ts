@@ -22,7 +22,6 @@ export default class Node extends Rect {
     this.nameBarHeight = opts.nameBarHeight || 40;
   }
   updatePath() {
-    let totalHeight = this.height + this.nameBarHeight;
     let path: Path2D = new Path2D;
     let r2 = this.r * 2;
     path.moveTo(this.x + this.width / 2, this.y);
@@ -32,17 +31,17 @@ export default class Node extends Rect {
       this.x + this.width, this.y + this.r,
       this.x + this.width, this.y + r2
     );
-    path.lineTo(this.x + this.width, this.y + totalHeight - r2);
+    path.lineTo(this.x + this.width, this.y + this.height - r2);
     path.bezierCurveTo(
-      this.x + this.width, this.y + totalHeight - this.r,
-      this.x + this.width - this.r, this.y + totalHeight,
-      this.x + this.width - r2, this.y + totalHeight
+      this.x + this.width, this.y + this.height - this.r,
+      this.x + this.width - this.r, this.y + this.height,
+      this.x + this.width - r2, this.y + this.height
     );
-    path.lineTo(this.x + r2, this.y + totalHeight);
+    path.lineTo(this.x + r2, this.y + this.height);
     path.bezierCurveTo(
-      this.x + this.r, this.y + totalHeight,
-      this.x, this.y + totalHeight - this.r,
-      this.x, this.y + totalHeight - r2,
+      this.x + this.r, this.y + this.height,
+      this.x, this.y + this.height - this.r,
+      this.x, this.y + this.height - r2,
     );
     path.lineTo(this.x, this.y + r2);
     path.bezierCurveTo(
