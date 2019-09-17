@@ -4,9 +4,9 @@ import Scene from './Scene';
 
 // 形状
 import Rect from './Rect';
+import Node from './Node';
 import Polygon from './Polygon';
 import Ellipse from './Ellipse';
-import Module from './Module';
 
 import Point from './Point';
 import Line from './Line';
@@ -21,8 +21,8 @@ export {
 
   Rect,
   Polygon,
+  Node,
   Ellipse,
-  Module,
 
   Point,
   Line,
