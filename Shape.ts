@@ -15,8 +15,8 @@ export default class Shape extends Element {
 
     this.x = opts.x || 0;
     this.y = opts.y || 0;
-    this.fill = opts.fill || 'hsla(0, 0%, 100%, .5)';
-    this.stroke = opts.stroke || '#fff';
+    this.fill = opts.fill || '#fff';
+    this.stroke = opts.stroke || '#333';
     this.lineWidth = opts.lineWidth || 2;
 
     let isMouseDown: boolean = false;

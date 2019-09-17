@@ -7,6 +7,7 @@ import Rect from './Rect';
 import Node from './Node';
 import Polygon from './Polygon';
 import Ellipse from './Ellipse';
+import Item from './Item';
 
 import Point from './Point';
 import Line from './Line';
@@ -23,6 +24,7 @@ export {
   Polygon,
   Node,
   Ellipse,
+  Item,
 
   Point,
   Line,

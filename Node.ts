@@ -61,16 +61,20 @@ export default class Node extends Rect {
   draw(ctx: CanvasRenderingContext2D) {
     if (!ctx) throw new Error('need ctx');
 
-    ctx.fillStyle = this.fill;
     ctx.strokeStyle = this.stroke;
     ctx.lineWidth = this.lineWidth;
     ctx.stroke(this.path);
-    ctx.fill(this.path);
+    
 
-    ctx.beginPath();
-    ctx.moveTo(this.x, this.y + this.nameBarHeight);
-    ctx.lineTo(this.x + this.width, this.y + this.nameBarHeight);
-    ctx.stroke();
+    let path = new Path2D;
+    path.rect(this.x, this.y, this.width, this.nameBarHeight);
+    ctx.fillStyle = this.fill;
+    ctx.fill(path);
+
+    path = new Path2D;
+    path.moveTo(this.x, this.y + this.nameBarHeight);
+    path.lineTo(this.x + this.width, this.y + this.nameBarHeight);
+    ctx.stroke(path);
 
     ctx.font = `${this.nameFontSize}px sans-serif`;
     ctx.fillStyle = this.nameFill;
