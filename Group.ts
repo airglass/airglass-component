@@ -3,20 +3,20 @@ import Element from './Element';
 export default class Group {
   children: Array<any>;
 
-  constructor(){
+  constructor() {
     this.children = [];
   }
-  // 可以一次性添加多个
-  add(){
+  add(child: any) {
     let children: Array<any> = [].slice.call(arguments, 0);
     children.forEach((child: Element) => {
       this.children.push(child);
     })
+    return children;
   }
-  remove(child: any){
-    for(let i in this.children){
-      if(child === this.children[i]){
-        this.children.splice(+i, 1);
+  remove(child: any) {
+    for (let i in this.children) {
+      if (child === this.children[i]) {
+        return this.children.splice(+i, 1);
       }
     }
   }

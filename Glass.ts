@@ -3,20 +3,23 @@ import Event from './Event';
 export default class Glass extends Event {
   subscribers: Function[];
   extends: string = 'Glass';
+  isMouseDown: boolean = false;
 
-  constructor(){
+  constructor(public glass: HTMLDivElement | HTMLCanvasElement) {
     super();
-
     this.subscribers = [];
   }
-  subscribe(targetGlass: Glass, subscriber: Function){
-    targetGlass.subscribers.push(subscriber);
+  emitSubscribers(actor: Element | Glass) {
+    this.subscribers.forEach(subscriber => subscriber(actor))
   }
-  unSubscribe(targetGlass: Glass, subscriber: Function){
-    for(let i = 0; i < targetGlass.subscribers.length; i++){
-      let _subscriber: Function = targetGlass.subscribers[i];
-      if(_subscriber === subscriber){
-        targetGlass.subscribers.splice(i, 1);
+  subscribe(subscriber: Function) {
+    this.subscribers.push(subscriber);
+  }
+  unSubscribe(subscriber: Function) {
+    for (let i = 0; i < this.subscribers.length; i++) {
+      let _subscriber: Function = this.subscribers[i];
+      if (_subscriber === subscriber) {
+        this.subscribers.splice(i, 1);
       }
     }
   }

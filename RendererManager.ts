@@ -1,23 +1,14 @@
 import Renderer from './Renderer';
-import Scene from './Scene';
+import Group from './Group';
 
-export default class RendererManager {
-  renderers: Array<Renderer>;
+export default class RendererManager extends Group {
   canvasWidth: number;
   canvasHeight: number;
 
   constructor(public wrapEl: any) {
-    this.renderers = [];
+    super();
     this.canvasWidth = 300;
     this.canvasHeight = 150;
-  }
-  generate() {
-    let renderer = new Renderer(
-      this.wrapEl.appendChild(document.createElement('canvas')).getContext('2d'),
-      new Scene,
-    );
-    this.renderers.push(renderer);
-    return renderer;
   }
   setSize(width: number, height: number) {
     this.canvasWidth = width || this.canvasWidth;
@@ -25,8 +16,8 @@ export default class RendererManager {
     this.wrapEl.style.width = `${width}px`;
     this.wrapEl.style.height = `${height}px`;
     this.wrapEl.style.position = `relative`;
-    for (let name in this.renderers) {
-      let renderer = this.renderers[name];
+    for (let name in this.children) {
+      let renderer: Renderer = this.children[name];
       renderer.ctx.canvas.dataset.name = name;
       renderer.ctx.canvas.width = width * devicePixelRatio;
       renderer.ctx.canvas.height = height * devicePixelRatio;
