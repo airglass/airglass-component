@@ -10,7 +10,7 @@ export default class Line {
     public endPoint: Point = new Point(0, 0)){
 
     this.path = new Path2D;
-    this.stroke = '#333';
+    this.stroke = '#666';
     this.lineWidth = 2;
   }
   updatePath(){

@@ -64,7 +64,7 @@ export default class Node extends Rect {
     ctx.strokeStyle = this.stroke;
     ctx.lineWidth = this.lineWidth;
     ctx.stroke(this.path);
-    
+
 
     let path = new Path2D;
     path.rect(this.x, this.y, this.width, this.nameBarHeight);

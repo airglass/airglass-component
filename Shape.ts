@@ -6,8 +6,8 @@ export default class Shape extends Element {
   x: number;
   y: number;
   // 有形的就颜色
-  fill: string;
-  stroke: string;
+  fill: any;
+  stroke: any;
   lineWidth: number;
   
   constructor(opts: any){
