@@ -16,6 +16,7 @@ export default class RendererManager extends Group {
     this.wrapEl.style.width = `${width}px`;
     this.wrapEl.style.height = `${height}px`;
     this.wrapEl.style.position = `relative`;
+    this.wrapEl.style.overflow = `hidden`;
     for (let name in this.children) {
       let renderer: Renderer = this.children[name];
       renderer.ctx.canvas.dataset.name = name;

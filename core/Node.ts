@@ -1,5 +1,5 @@
-import Rect from './Rect';
-import Ellipse from './Ellipse';
+import Rect from '../shape/Rect';
+import Ellipse from '../shape/Ellipse';
 
 export default class Node extends Rect {
   imports: Array<Ellipse>;

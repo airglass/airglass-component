@@ -1,4 +1,4 @@
-import Point from './Point';
+import Point from '../core/Point';
 import Line from './Line';
 
 export default class BezierLine extends Line {

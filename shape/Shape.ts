@@ -1,5 +1,5 @@
-import Element from './Element';
-import Renderer from './Renderer';
+import Element from '../core/Element';
+import Renderer from '../core/Renderer';
 
 export default class Shape extends Element {
   // 有形的就有确定的位置

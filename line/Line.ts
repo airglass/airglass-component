@@ -1,4 +1,4 @@
-import Point from './Point';
+import Point from '../core/Point';
 
 export default class Line {
   path: Path2D;

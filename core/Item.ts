@@ -1,4 +1,4 @@
-import Shape from './Shape';
+import Shape from '../shape/Shape';
 
 export default class Item extends Shape {
   name: string;

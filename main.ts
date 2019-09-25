@@ -1,19 +1,22 @@
 // 基础
-import Airglass from './Airglass';
-import Renderer from './Renderer';
-import Scene from './Scene';
+import Airglass from './core/Airglass';
+import Renderer from './core/Renderer';
+import Scene from './core/Scene';
 
 // 形状
-import Rect from './Rect';
-import Node from './Node';
-import Polygon from './Polygon';
-import Ellipse from './Ellipse';
-import Item from './Item';
+import Rect from './shape/Rect';
+import Node from './core/Node';
+import Polygon from './shape/Polygon';
+import Ellipse from './shape/Ellipse';
+import Item from './core/Item';
 
-import Point from './Point';
-import Line from './Line';
-import BezierLine from './BezierLine';
-import NodeLine from './NodeLine';
+import Point from './core/Point';
+import Line from './line/Line';
+import BezierLine from './line/BezierLine';
+
+// 支持动画
+import NodeLine from './animation/NodeLine';
+import RadarWave from './animation/RadarWave';
 
 import min from './utils/min';
 import max from './utils/max';
@@ -37,7 +40,9 @@ export {
   Point,
   Line,
   BezierLine,
+
   NodeLine,
+  RadarWave,
 
   utils,
 }

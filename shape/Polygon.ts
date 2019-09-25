@@ -1,7 +1,7 @@
 import Shape from './Shape';
-import Point from './Point';
-import min from './utils/min';
-import max from './utils/max';
+import Point from '../core/Point';
+import min from '../utils/min';
+import max from '../utils/max';
 
 export default class Polygon extends Shape {
   points: Array<Point>;
@@ -49,6 +49,7 @@ export default class Polygon extends Shape {
     this.height = this.maxY - this.minY;
     this.x = this.minX + this.width / 2;
     this.y = this.minY + this.height / 2;
+    return this;
   }
   draw(ctx: CanvasRenderingContext2D) {
     if (!this.path) return;
