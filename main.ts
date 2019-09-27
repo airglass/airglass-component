@@ -5,21 +5,23 @@ import Scene from './core/Scene';
 import Point from './core/Point';
 import Line from './core/Line';
 
-// 元素
-import Circle from './element/Circle';
-import Ellipse from './element/Ellipse';
-import Node from './element/Node';
-import Polygon from './element/Polygon';
-import PolyLine from './element/PolyLine';
-import Rect from './element/Rect';
+// 基础形状类
+import Circle from './base/Circle';
+import Ellipse from './base/Ellipse';
+import Rect from './base/Rect';
 
-// 效果
+// 组件类
+import Node from './component/Node';
+import Polygon from './component/Polygon';
+import PolyLine from './component/PolyLine';
+import Avatar from './component/Avatar';
+
+// 效果类
 import RadarWave from './effects/RadarWave';
 
 // 工具函数
 import min from './utils/min';
 import max from './utils/max';
-
 let utils = {
   min,
   max,
@@ -32,13 +34,15 @@ export {
 
   Point,
   Line,
-  
+
   Circle,
   Ellipse,
+  
   Node,
   PolyLine,
   Polygon,
   Rect,
+  Avatar,
 
   RadarWave,
 

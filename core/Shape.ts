@@ -8,17 +8,17 @@ export default class Shape extends Element {
   stroke: any;
   line: number;
   isMouseDown: boolean;
-  
-  constructor(opts: any){
+
+  constructor(opts: any) {
     super(opts);
 
     this.x = opts.x || 0;
     this.y = opts.y || 0;
     this.fill = opts.fill || '#eee';
     this.stroke = opts.stroke || '#111';
-    this.line = opts.line || devicePixelRatio;
+    this.line = opts.line * devicePixelRatio || devicePixelRatio;
     this.isMouseDown = false;
-    
+
     this.on('mousedown', (e: any, renderer: Renderer) => {
       this.isMouseDown = true;
       this.event = {
@@ -37,7 +37,7 @@ export default class Shape extends Element {
         y: e.layerY * devicePixelRatio,
       };
 
-      if (this.isMouseDown){
+      if (this.isMouseDown) {
         this.event = {
           type: 'touchmove',
           extends: this.extends,
@@ -56,5 +56,8 @@ export default class Shape extends Element {
         y: e.layerY * devicePixelRatio,
       };
     })
+  }
+  draw(ctx: CanvasRenderingContext2D) {
+
   }
 }

@@ -1,4 +1,4 @@
-import Rect from './Rect';
+import Rect from '../base/Rect';
 import Point from '../core/Point';
 import Line from '../core/Line';
 import Shape from '../core/Shape';

@@ -1,13 +1,11 @@
 import Event from './Event';
 
 interface EventListener {
-  // 监听的事件类型
   eventType: string;
   listener: Function;
 }
 
 export default class Element extends Event {
-  // 全部事件监听器
   eventListeners: EventListener[];
   extends: string;
   path: Path2D;
