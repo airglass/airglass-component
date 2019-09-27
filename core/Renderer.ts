@@ -13,7 +13,7 @@ export default class Renderer extends Glass {
     return this;
   }
   render() {
-    this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+    this.clear();
     for (let child of this.scene.children) {
       child.draw && child.draw(this.ctx);
     }

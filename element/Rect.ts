@@ -1,4 +1,4 @@
-import Shape from './Shape';
+import Shape from '../core/Shape';
 
 export default class Rect extends Shape {
   width: number;
@@ -11,7 +11,6 @@ export default class Rect extends Shape {
     this.height = opts.height || 100;
   }
   updatePath(){
-    if(!this.width || !this.height) return;
     let path: Path2D = new Path2D();
     path.rect(this.x, this.y, this.width, this.height);
     this.path = path;
@@ -20,7 +19,7 @@ export default class Rect extends Shape {
     if(!ctx) throw new Error('need ctx');
     ctx.fillStyle = this.fill;
     ctx.strokeStyle = this.stroke;
-    ctx.lineWidth = this.lineWidth;
+    ctx.lineWidth = this.line;
     ctx.stroke(this.path);
     ctx.fill(this.path);
   }

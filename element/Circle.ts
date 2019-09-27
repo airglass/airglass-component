@@ -1,6 +1,6 @@
-import Shape from './Shape';
+import Shape from '../core/Shape';
 
-export default class Ellipse extends Shape {
+export default class Circle extends Shape {
   width: number;
   height: number;
 
@@ -18,7 +18,7 @@ export default class Ellipse extends Shape {
   draw(ctx: CanvasRenderingContext2D) {
     if (!ctx) throw new Error('need ctx');
     ctx.strokeStyle = this.stroke;
-    ctx.lineWidth = this.lineWidth;
+    ctx.lineWidth = this.line;
     ctx.stroke(this.path);
     ctx.fillStyle = this.fill;
     ctx.fill(this.path);

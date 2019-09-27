@@ -1,23 +1,22 @@
-// 基础
+// 核心
 import Airglass from './core/Airglass';
 import Renderer from './core/Renderer';
 import Scene from './core/Scene';
-
-// 形状
-import Rect from './shape/Rect';
-import Node from './core/Node';
-import Polygon from './shape/Polygon';
-import Ellipse from './shape/Ellipse';
-import Item from './core/Item';
-
 import Point from './core/Point';
-import Line from './line/Line';
-import BezierLine from './line/BezierLine';
+import Line from './core/Line';
 
-// 支持动画
-import NodeLine from './animation/NodeLine';
-import RadarWave from './animation/RadarWave';
+// 元素
+import Circle from './element/Circle';
+import Ellipse from './element/Ellipse';
+import Node from './element/Node';
+import Polygon from './element/Polygon';
+import PolyLine from './element/PolyLine';
+import Rect from './element/Rect';
 
+// 效果
+import RadarWave from './effects/RadarWave';
+
+// 工具函数
 import min from './utils/min';
 import max from './utils/max';
 
@@ -31,17 +30,16 @@ export {
   Renderer,
   Scene,
 
-  Rect,
-  Polygon,
-  Node,
-  Ellipse,
-  Item,
-
   Point,
   Line,
-  BezierLine,
+  
+  Circle,
+  Ellipse,
+  Node,
+  PolyLine,
+  Polygon,
+  Rect,
 
-  NodeLine,
   RadarWave,
 
   utils,

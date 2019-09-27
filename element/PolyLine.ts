@@ -1,9 +1,9 @@
-import Shape from './Shape';
+import Shape from '../core/Shape';
 import Point from '../core/Point';
 import min from '../utils/min';
 import max from '../utils/max';
 
-export default class Polygon extends Shape {
+export default class PolyLine extends Shape {
   points: Array<Point>;
   width: number | undefined;
   height: number | undefined;
@@ -53,10 +53,9 @@ export default class Polygon extends Shape {
   }
   draw(ctx: CanvasRenderingContext2D) {
     if (!this.path) return;
-    ctx.fillStyle = this.fill;
+    ctx.lineJoin = 'round';
     ctx.strokeStyle = this.stroke;
-    ctx.lineWidth = this.lineWidth;
+    ctx.lineWidth = this.line;
     ctx.stroke(this.path);
-    ctx.fill(this.path);
   }
 }
