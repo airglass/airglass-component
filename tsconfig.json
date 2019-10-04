@@ -5,7 +5,7 @@
     "strict": true,
     "noImplicitAny": false,
     "noImplicitThis": false,
-    "esModuleInterop": true,
+    "esModuleInterop": true
   },
   "typedocOptions": {
     "mode": "file",
