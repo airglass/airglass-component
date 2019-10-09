@@ -5,11 +5,14 @@ import Scene from './Scene';
 
 export default class Airglass extends Glass {
   rendererManager: RendererManager;
+  boundingClientRect: any;
 
   constructor(glass: HTMLDivElement) {
     super(glass);
     this.rendererManager = new RendererManager(glass);
     this._eventHandler = this._eventHandler.bind(this);
+
+    this.updateBoundingLcientRect();
   }
   getScrollOffsets() {
     let w = window;
@@ -33,6 +36,9 @@ export default class Airglass extends Glass {
       width: _.width || (_.right - _.left),
       height: _.height || (_.bottom - _.top)
     }
+  }
+  updateBoundingLcientRect(){
+    this.boundingClientRect = this.getBoundingClientRect();
   }
   addGlass(name) {
     let renderer = new Renderer(
@@ -68,17 +74,21 @@ export default class Airglass extends Glass {
     let touch = e.touches && e.touches[0];
     switch (e.type) {
       case 'mousedown':
+        this.event.interactor = 'mouse';
         this.isMouseDown = true;
         this.event.type = 'touchstart';
         this.event.x = e.layerX * devicePixelRatio;
         this.event.y = e.layerY * devicePixelRatio;
         break;
       case 'touchstart':
+        this.event.interactor = 'finger';
         this.event.type = 'touchstart';
-        this.event.x = touch.clientX * devicePixelRatio;
-        this.event.y = touch.clientY * devicePixelRatio;
+        this.event.x = (touch.clientX - this.boundingClientRect.x) * devicePixelRatio;
+        this.event.y = (touch.clientY - this.boundingClientRect.y) * devicePixelRatio;
+        console.log(this.event)
         break;
       case 'mousemove':
+        this.event.interactor = 'mouse';
         this.event.type = 'mousemove';
         if (this.isMouseDown) {
           this.event.type = 'touchmove';
@@ -87,15 +97,18 @@ export default class Airglass extends Glass {
         this.event.y = e.layerY * devicePixelRatio;
         break;
       case 'touchmove':
+        this.event.interactor = 'finger';
         this.event.type = 'touchmove';
-        this.event.x = touch.clientX * devicePixelRatio;
-        this.event.y = touch.clientY * devicePixelRatio;
+        this.event.x = (touch.clientX - this.boundingClientRect.x) * devicePixelRatio;
+        this.event.y = (touch.clientY - this.boundingClientRect.y) * devicePixelRatio;
         break;
       case 'mouseup':
+        this.event.interactor = 'mouse';
         this.isMouseDown = false;
         this.event.type = 'touchend';
         break
       case 'touchend':
+        this.event.interactor = 'finger';
         this.event.type = 'touchend';
         break
     }
