@@ -8,7 +8,7 @@ export default class RendererManager extends Group {
   width: number;
   height: number;
 
-  constructor(public wrapEl: any) {
+  constructor(public glass: any) {
     super();
     this.canvasWidth = 300;
     this.canvasHeight = 150;
@@ -16,15 +16,25 @@ export default class RendererManager extends Group {
     this.width = this.canvasWidth * this.dpr;
     this.height = this.canvasHeight * this.dpr;
   }
+  clearAll(){
+    this.children.forEach(renderer => {
+      renderer.clear();
+    })
+  }
+  renderAll(){
+    this.children.forEach(renderer => {
+      renderer.render();
+    })
+  }
   setSize(width: number, height: number) {
     this.canvasWidth = width || this.canvasWidth;
     this.canvasHeight = height || this.canvasHeight;
     this.width = this.canvasWidth * this.dpr;
     this.height = this.canvasHeight * this.dpr;
-    this.wrapEl.style.width = `${this.canvasWidth}px`;
-    this.wrapEl.style.height = `${this.canvasHeight}px`;
-    this.wrapEl.style.position = `relative`;
-    this.wrapEl.style.overflow = `hidden`;
+    this.glass.style.width = `${this.canvasWidth}px`;
+    this.glass.style.height = `${this.canvasHeight}px`;
+    this.glass.style.position = `relative`;
+    this.glass.style.overflow = `hidden`;
     for (let name in this.children) {
       let renderer: Renderer = this.children[name];
       renderer.ctx.canvas.dataset.name = name;

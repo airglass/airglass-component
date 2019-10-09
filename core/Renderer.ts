@@ -5,19 +5,21 @@ import Scene from './Scene';
 export default class Renderer extends Glass {
   constructor(public ctx: any, public scene: Scene) {
     super(ctx.canvas);
-    if (!ctx) throw new Error('need CanvasRenderingContext2D');
-    if (!scene) throw new Error('need Scene');
+    if (!ctx || !scene) throw new Error('please check parameter');
   }
   clear() {
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
     return this;
   }
   render() {
-    this.clear();
     for (let child of this.scene.children) {
       child.draw && child.draw(this.ctx);
     }
     return this;
+  }
+  reRender() {
+    this.clear();
+    return this.render();
   }
   getElementsContainPoint(point: Point) {
     return this.scene.children.map(el => {

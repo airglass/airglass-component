@@ -9,7 +9,30 @@ export default class Airglass extends Glass {
   constructor(glass: HTMLDivElement) {
     super(glass);
     this.rendererManager = new RendererManager(glass);
-    this.eventHandler = this.eventHandler.bind(this);
+    this._eventHandler = this._eventHandler.bind(this);
+  }
+  getScrollOffsets() {
+    let w = window;
+    return {
+      x: w.pageXOffset,
+      y: w.pageYOffset,
+    }
+  }
+  getViewportSize() {
+    let w = window;
+    return {
+      x: w.innerWidth,
+      y: w.innerHeight,
+    }
+  }
+  getBoundingClientRect(){
+    let _ = this.glass.getBoundingClientRect();
+    return {
+      x: _.left,
+      y: _.top,
+      width: _.width || (_.right - _.left),
+      height: _.height || (_.bottom - _.top)
+    }
   }
   addGlass() {
     let canvas: HTMLCanvasElement = document.createElement('canvas');
@@ -20,33 +43,27 @@ export default class Airglass extends Glass {
     );
     return this.rendererManager.add(renderer)[0];
   }
-  clearnAll() {
-
-  }
-  renderAll() {
-
-  }
   setInteractable() {
     let galss = this.glass;
-    galss.addEventListener('mousedown', this.eventHandler);
-    galss.addEventListener('touchstart', this.eventHandler);
-    galss.addEventListener('mousemove', this.eventHandler);
-    galss.addEventListener('touchmove', this.eventHandler);
-    galss.addEventListener('mouseup', this.eventHandler);
-    galss.addEventListener('touchend', this.eventHandler);
+    galss.addEventListener('mousedown', this._eventHandler);
+    galss.addEventListener('touchstart', this._eventHandler);
+    galss.addEventListener('mousemove', this._eventHandler);
+    galss.addEventListener('touchmove', this._eventHandler);
+    galss.addEventListener('mouseup', this._eventHandler);
+    galss.addEventListener('touchend', this._eventHandler);
     return this;
   }
   offInteractable() {
     let galss = this.glass;
-    galss.removeEventListener('mousedown', this.eventHandler);
-    galss.removeEventListener('touchstart', this.eventHandler);
-    galss.removeEventListener('mousemove', this.eventHandler);
-    galss.removeEventListener('touchmove', this.eventHandler);
-    galss.removeEventListener('mouseup', this.eventHandler);
-    galss.removeEventListener('touchend', this.eventHandler);
+    galss.removeEventListener('mousedown', this._eventHandler);
+    galss.removeEventListener('touchstart', this._eventHandler);
+    galss.removeEventListener('mousemove', this._eventHandler);
+    galss.removeEventListener('touchmove', this._eventHandler);
+    galss.removeEventListener('mouseup', this._eventHandler);
+    galss.removeEventListener('touchend', this._eventHandler);
     return this;
   }
-  eventHandler(e: any) {
+  _eventHandler(e: any) {
     e.preventDefault();
     this.event = { extends: this.extends };
     let touch = e.touches && e.touches[0];
@@ -83,6 +100,6 @@ export default class Airglass extends Glass {
         this.event.type = 'touchend';
         break
     }
-    this.emitSubscribers(this);
+    this.emitSubscribers(this.event);
   }
 }
