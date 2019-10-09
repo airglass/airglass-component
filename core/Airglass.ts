@@ -34,13 +34,12 @@ export default class Airglass extends Glass {
       height: _.height || (_.bottom - _.top)
     }
   }
-  addGlass() {
-    let canvas: HTMLCanvasElement = document.createElement('canvas');
-    this.glass.appendChild(canvas);
+  addGlass(name) {
     let renderer = new Renderer(
-      canvas.getContext('2d'),
+      document.createElement('canvas').getContext('2d'),
       new Scene()
     );
+    this.glass.appendChild(renderer.ctx.canvas);
     return this.rendererManager.add(renderer)[0];
   }
   setInteractable() {

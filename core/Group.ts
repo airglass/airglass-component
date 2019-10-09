@@ -6,7 +6,7 @@ export default class Group {
   constructor() {
     this.children = [];
   }
-  add() {
+  add(child: any) {
     let children: Array<any> = [].slice.call(arguments, 0);
     children.forEach((child: Element) => {
       this.children.push(child);

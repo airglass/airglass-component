@@ -35,9 +35,8 @@ export default class RendererManager extends Group {
     this.glass.style.height = `${this.canvasHeight}px`;
     this.glass.style.position = `relative`;
     this.glass.style.overflow = `hidden`;
-    for (let name in this.children) {
-      let renderer: Renderer = this.children[name];
-      renderer.ctx.canvas.dataset.name = name;
+    for (let i in this.children) {
+      let renderer: Renderer = this.children[i];
       renderer.ctx.canvas.width = this.width;
       renderer.ctx.canvas.height = this.height;
       renderer.ctx.canvas.style.position = 'absolute';
