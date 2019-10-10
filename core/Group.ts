@@ -16,7 +16,7 @@ export default class Group {
   remove(child: any) {
     for (let i in this.children) {
       if (child === this.children[i]) {
-        return this.children.splice(+i, 1);
+        return this.children.splice(+i, 1)[0]
       }
     }
   }
