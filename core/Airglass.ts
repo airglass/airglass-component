@@ -12,7 +12,13 @@ export default class Airglass extends Glass {
     this.rendererManager = new RendererManager(glass);
     this._eventHandler = this._eventHandler.bind(this);
 
-    this.updateBoundingLcientRect();
+  }
+  initSize(width: number, height: number) {
+    this.glass.style.position = 'relative';
+    this.setStyleSize(width, height);
+    this.rendererManager.setAllSize(width, height);
+
+    this.updateBoundingClientRect();
   }
   getScrollOffsets() {
     let w = window;
@@ -28,7 +34,7 @@ export default class Airglass extends Glass {
       y: w.innerHeight,
     }
   }
-  getBoundingClientRect(){
+  getBoundingClientRect() {
     let _ = this.glass.getBoundingClientRect();
     return {
       x: _.left,
@@ -37,14 +43,15 @@ export default class Airglass extends Glass {
       height: _.height || (_.bottom - _.top)
     }
   }
-  updateBoundingLcientRect(){
+  updateBoundingClientRect() {
     this.boundingClientRect = this.getBoundingClientRect();
   }
-  addGlass(name) {
+  addRenderer(rendererName): Renderer {
     let renderer = new Renderer(
       document.createElement('canvas').getContext('2d'),
       new Scene()
     );
+    renderer.name = rendererName;
     this.glass.appendChild(renderer.ctx.canvas);
     return this.rendererManager.add(renderer)[0];
   }

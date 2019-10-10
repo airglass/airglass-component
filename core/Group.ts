@@ -13,6 +13,12 @@ export default class Group {
     })
     return children;
   }
+  getChildByIndex(index){
+    return this.children[index];
+  }
+  getIndexByChild(child){
+    return this.children.indexOf(child);
+  }
   remove(child: any) {
     for (let i in this.children) {
       if (child === this.children[i]) {

@@ -10,14 +10,14 @@ export default class Progress {
       this.dis = endValue - startValue;
       this.value = this.drive();
     }
-    _getValue() {
-      return this.startValue + this.dis * this.t;
+    getValue(t) {
+      return this.startValue + this.dis * t;
     }
     drive() {
       if (this.t > 1) {
         this.t = 0;
       }
-      let value = this._getValue();
+      let value = this.getValue(this.t);
       this.t += this.step;
       return this.value = value;
     }

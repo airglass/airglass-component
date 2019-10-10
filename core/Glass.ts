@@ -5,9 +5,17 @@ export default class Glass extends Event {
   extends: string = 'Glass';
   isMouseDown: boolean = false;
 
-  constructor(public glass: HTMLDivElement | HTMLCanvasElement) {
+  constructor(public glass: any) {
     super();
     this.subscribers = [];
+  }
+  setStyleSize(width: number, height: number) {
+    this.glass.style.width = `${width}px`;
+    this.glass.style.height = `${height}px`;
+  }
+  setAttrSize(width: number, height: number) {
+    this.glass.width = width * window.devicePixelRatio;
+    this.glass.height = height * window.devicePixelRatio;
   }
   emitSubscribers(actor: Element | Glass) {
     this.subscribers.forEach(subscriber => subscriber(actor))
