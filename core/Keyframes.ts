@@ -3,14 +3,14 @@ export default class Keyframes {
   frameWidth: any;
   frameHeight: any;
   frameCounts: any;
-  userData: any;
+  userData: any = {};
   sprite: HTMLCanvasElement;
-  _currentFrameNumber: any;
+  currentFrameNumber: any;
 
   constructor() {
     this.sprite = document.createElement('canvas');
   }
-  static generateEmptyKeyframes(frameWidth, frameHeight, frameCounts) {
+  static generateEmptyFrames(frameWidth, frameHeight, frameCounts) {
     let frames: any = [];
     for (let i = 0; i < frameCounts; i++) {
       let frame: any = document.createElement('canvas');
@@ -19,58 +19,40 @@ export default class Keyframes {
       frame.height = frameHeight;
       frames.push(frame);
     }
-    let keyframes = new Keyframes();
-    keyframes.setFrames(frames);
-    return keyframes;
+    return frames;
   }
-  static generateKeyframesfromImage(url, frameCounts, userData, cb) {
+  static generateFramesfromImage(imageUrl, frameCounts, cb) {
     let image = new Image;
-    image.src = url;
     image.onload = () => {
       let frameWidth = image.width / frameCounts;
       let frameHeight = image.height;
-      let keyframes = Keyframes.generateEmptyKeyframes(frameWidth, frameHeight, frameCounts); 
-      userData.x -= frameWidth / 2;
-      userData.y -= frameHeight / 2;
-      keyframes.userData = userData;
-      for (let i = 0; i < keyframes.frames.length; i++) {
-        let frame = keyframes.frames[i];
-        frame.userData = {};
-        let ctx = frame.getContext('2d');
-        ctx.drawImage(image, -i * frameWidth, 0)
-      }
-      cb && cb(keyframes);
+      let frames = Keyframes.generateEmptyFrames(frameWidth, frameHeight, frameCounts);
+      for (let i = 0; i < frameCounts; i++) frames[i].getContext('2d').drawImage(image, -i * frameWidth, 0);
+      cb(frames);
     }
+    image.src = imageUrl;
   }
   setFrames(frames) {
     this.frames = frames;
     this.frameWidth = frames[0].width;
     this.frameHeight = frames[0].height;
     this.frameCounts = frames.length;
-    this._currentFrameNumber = 1;
+    this.currentFrameNumber = 1;
   }
   setCurrentFrame(frameNumber) {
     if (frameNumber < 1) frameNumber = 1;
     if (frameNumber > this.frameCounts) frameNumber = this.frameCounts;
-    this._currentFrameNumber = frameNumber;
+    this.currentFrameNumber = frameNumber;
   }
   updateFrame(frameNumber, processor) {
     if (frameNumber >= 1 && frameNumber <= this.frameCounts) {
-      processor(this.frames[frameNumber - 1]);
+      processor(this.frames[frameNumber - 1].getContext('2d'));
     }
   }
-  getFrame(frameNumber) {
-    this.setCurrentFrame(frameNumber);
-    return this.frames[this._currentFrameNumber - 1];
-  }
-  getFrames(){
-    return this.frames;
-  }
-  getCurrentFrameGoNext() {
-    let frame = this.getFrame(this._currentFrameNumber);
-    this._currentFrameNumber++;
-    if (this._currentFrameNumber > this.frameCounts) this._currentFrameNumber = 1;
-    return frame;
+  drawFrame(ctx) {
+    ctx.drawImage(this.frames[this.currentFrameNumber - 1], this.userData.x, this.userData.y);
+    this.currentFrameNumber++;
+    if (this.currentFrameNumber > this.frameCounts) this.currentFrameNumber = 1;
   }
   updateSprite() {
     let sprite = this.sprite;

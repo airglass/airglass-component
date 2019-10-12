@@ -6,8 +6,7 @@ import Point from './core/Point';
 import Line from './core/Line';
 import Progress from './core/Progress';
 import AlterProgress from './core/AlterProgress';
-import Keyframes from './core/Keyframes';
-import ImageFrames from './effects/ImageFrames';
+import Effect from './effects/Effect';
 
 // 基础形状类
 import Circle from './base/Circle';
@@ -26,9 +25,11 @@ import RadarWave from './effects/RadarWave';
 // 工具函数
 import min from './utils/min';
 import max from './utils/max';
+import ajax from './utils/ajax';
 let utils = {
   min,
   max,
+  ajax,
 }
 
 export {
@@ -37,8 +38,7 @@ export {
   Scene,
   Progress,
   AlterProgress,
-  Keyframes,
-  ImageFrames,
+  Effect,
 
   Point,
   Line,
