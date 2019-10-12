@@ -7,6 +7,7 @@ import Line from './core/Line';
 import Progress from './core/Progress';
 import AlterProgress from './core/AlterProgress';
 import Keyframes from './core/Keyframes';
+import ImageFrames from './effects/ImageFrames';
 
 // 基础形状类
 import Circle from './base/Circle';
@@ -37,6 +38,7 @@ export {
   Progress,
   AlterProgress,
   Keyframes,
+  ImageFrames,
 
   Point,
   Line,

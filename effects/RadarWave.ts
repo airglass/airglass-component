@@ -1,60 +1,60 @@
-import Shape from '../core/Shape';
 import AlterProgress from '../core/AlterProgress';
 import Keyframes from '../core/Keyframes';
 
-export default class RadarWave extends Shape {
-  maxSize: number;
+export default class RadarWave {
+  x: number;
+  y: number;
+  radarSize: number;
   maxOpacity: number;
   hue: number;
-  progress: any;
-  keyframes: Keyframes;
-  keyRate: number;
+  keyframes: any;
+  frameCounts: any;
+  _progress: any;
+  _initialized: boolean = false;
 
   constructor(opts) {
-    super(opts);
+    this.x = opts.x || 0;
+    this.y = opts.y || 0;
     this.hue = opts.hue || 0;
-    this.maxSize = opts.maxSize || 30;
+    this.radarSize = opts.radarSize * devicePixelRatio || 30 * devicePixelRatio;
     this.maxOpacity = opts.maxOpacity || 1;
-    this.progress = new AlterProgress(0, this.maxOpacity);
-    this.keyRate = opts.keyRate || 30;
+    this._progress = new AlterProgress(0, this.maxOpacity);
+    this.frameCounts = opts.frameCounts || 30;
 
-    let _maxSize_2 = this.maxSize * devicePixelRatio;
-    let _halfMaxSize = (this.maxSize / 2) * devicePixelRatio;
-    this.keyframes = new Keyframes(
-      this.x - _halfMaxSize,
-      this.y - _halfMaxSize,
-      _maxSize_2,
-      _maxSize_2
-    );
-    this.generateKeyframes(this.keyRate);
-  }
-  generateKeyframes(frameCounts) {
-    let step = 1 / frameCounts;
-    for (let i = 0; i < frameCounts; i++) {
-      let t = i * step;
-      this.progress._radarOpacity = this.progress.getValue(t);
-      this.progress._radarSize = this.maxSize * t;
-      let canvas = this.keyframes.addKeyframe();
-      this._draw(canvas.getContext('2d'));
+    let frameWidth = this.radarSize;
+    let frameHeight = this.radarSize;
+    let frameCounts = this.frameCounts;
+    let halfRadarSize = this.radarSize / 2;
+    this.keyframes = Keyframes.generateEmptyKeyframes(frameWidth, frameHeight, frameCounts);
+    this.keyframes.userData = {
+      x: this.x - halfRadarSize,
+      y: this.y - halfRadarSize,
+      halfRadarSize: halfRadarSize
     }
-    this.keyframes.frames.forEach(frame => {
-      console.log(frame.toDataURL());
-    })
+    let step = 1 / this.frameCounts;
+    for (let i = 0; i < this.frameCounts; i++) {
+      let t = i * step;
+      this._progress._radarOpacity = this._progress.getValue(t);
+      this._progress._radarRadius = halfRadarSize * t;
+      this.keyframes.updateFrame(i + 1, frame => {
+        let ctx = frame.getContext('2d');
+        this._draw(ctx);
+      });
+    }
+    this._initialized = true;
   }
   _draw(ctx) {
-    ctx.fillStyle = this.fill;
-    ctx.fill(this.path);
+    ctx.fillStyle = `hsla(${this.hue}, 100%, 50%, ${this._progress._radarOpacity})`;
+    ctx.strokeStyle = `hsla(${this.hue}, 100%, 50%, ${this._progress._radarOpacity + 0.1})`;
 
-    ctx.fillStyle = `hsla(${this.hue}, 100%, 50%, ${this.progress._radarOpacity})`;
-    ctx.strokeStyle = `hsla(${this.hue}, 100%, 50%, ${this.progress._radarOpacity + 0.1})`;
     let path = new Path2D;
-    path.arc((this.maxSize / 2) * devicePixelRatio, (this.maxSize / 2) * devicePixelRatio, this.progress._radarSize, 0, Math.PI * 2, true);
+    path.arc(this.keyframes.userData.halfRadarSize, this.keyframes.userData.halfRadarSize, this._progress._radarRadius, 0, Math.PI * 2, true);
     ctx.fill(path);
     ctx.stroke(path);
   }
   draw(ctx) {
-    let frame = this.keyframes.getCurrentFrame();
-    if (!frame) return;
-    ctx.drawImage(frame, this.keyframes.x, this.keyframes.y);
+    if (!this._initialized) return;
+    let frame = this.keyframes.getCurrentFrameGoNext();
+    ctx.drawImage(frame, this.keyframes.userData.x, this.keyframes.userData.y);
   }
 }
