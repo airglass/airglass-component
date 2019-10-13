@@ -1,9 +1,9 @@
-import Shape from '../core/Shape';
+import InteractableShape from '../core/InteractableShape';
 import Point from '../core/Point';
 import min from '../utils/min';
 import max from '../utils/max';
 
-export default class PolyLine extends Shape {
+export default class PolyLine extends InteractableShape {
   points: Array<Point>;
   width: number | undefined;
   height: number | undefined;

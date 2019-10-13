@@ -1,6 +1,6 @@
-import Shape from '../core/Shape';
+import InteractableShape from '../core/InteractableShape';
 
-export default class Avatar extends Shape {
+export default class Avatar extends InteractableShape {
   size: number;
   labelSize: number;
   r: number;

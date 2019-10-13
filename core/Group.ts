@@ -1,14 +1,12 @@
-import Element from './Element';
-
 export default class Group {
   children: Array<any>;
 
   constructor() {
     this.children = [];
   }
-  add(child: any) {
+  add(child?) {
     let children: Array<any> = [].slice.call(arguments, 0);
-    children.forEach((child: Element) => {
+    children.forEach((child) => {
       this.children.push(child);
     })
     return children;

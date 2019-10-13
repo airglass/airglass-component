@@ -1,9 +1,7 @@
-import Renderer from './Renderer';
 import Group from './Group';
 
 export default class RendererManager extends Group {
-
-  constructor(public glass: any) {
+  constructor(public wrapElement: any) {
     super();
   }
   clearAll() {

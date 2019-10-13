@@ -1,6 +1,6 @@
-import Shape from '../core/Shape';
+import InteractableShape from '../core/InteractableShape';
 
-export default class Rect extends Shape {
+export default class Rect extends InteractableShape {
   width: number;
   height: number;
   

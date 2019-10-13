@@ -4,16 +4,18 @@ import Scene from './Scene';
 
 export default class Renderer extends Glass {
   name: string = 'unnamed';
+  scene: Scene;
 
-  constructor(public ctx: any, public scene: Scene) {
+  constructor(public ctx: any) {
     super(ctx.canvas);
-    if (!ctx || !scene) throw new Error('please check parameter');
+    this.scene = new Scene();
+    if (!ctx) throw new Error('please check parameter');
   }
   setSize(width: number, height: number) {
-    this.glass.style.position = 'absolute';
-    this.glass.style.top = 0;
-    this.glass.style.left = 0;
-    this.setAttrSize(width, height);
+    this.wrapElement.style.position = 'absolute';
+    this.wrapElement.style.top = 0;
+    this.wrapElement.style.left = 0;
+    this.setAttrSize(width * window.devicePixelRatio, height * window.devicePixelRatio);
     this.setStyleSize(width, height);
   }
   clear() {

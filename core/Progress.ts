@@ -1,24 +1,24 @@
 export default class Progress {
-    value: number;
-    dis: number;
-    constructor(
-      public startValue: number = 0,
-      public endValue: number = 10,
-      public t: number = 0,
-      public step: number = 0.05
-    ) {
-      this.dis = endValue - startValue;
-      this.value = this.drive();
-    }
-    getValue(t) {
-      return this.startValue + this.dis * t;
-    }
-    drive() {
-      if (this.t > 1) {
-        this.t = 0;
-      }
-      let value = this.getValue(this.t);
-      this.t += this.step;
-      return this.value = value;
-    }
+  startValue: number;
+  endValue: number;
+  t: number;
+  step: number;
+  value: number;
+  valueLength: number;
+  constructor(startValue, endValue, t, step) {
+    this.value = this.startValue = startValue || 0;
+    this.endValue = endValue || 1;
+    (t >= 0 && t <= 1) ? (this.t = t) : (this.t = 0);
+    this.step = step || 0.1;
+    this.valueLength = endValue - startValue;
   }
+  getValue(t) {
+    return this.startValue + this.valueLength * t;
+  }
+  drive() {
+    let value = this.getValue(this.t);
+    this.t += this.step;
+    this.t > 1 && (this.t = 0);
+    return this.value = value;
+  }
+}

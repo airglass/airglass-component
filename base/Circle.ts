@@ -1,6 +1,6 @@
-import Shape from '../core/Shape';
+import InteractableShape from '../core/InteractableShape';
 
-export default class Circle extends Shape {
+export default class Circle extends InteractableShape {
   width: number;
   height: number;
 

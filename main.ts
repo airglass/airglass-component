@@ -6,7 +6,7 @@ import Point from './core/Point';
 import Line from './core/Line';
 import Progress from './core/Progress';
 import AlterProgress from './core/AlterProgress';
-import Effect from './effects/Effect';
+import Renderable from './core/Renderable';
 
 // 基础形状类
 import Circle from './base/Circle';
@@ -38,7 +38,7 @@ export {
   Scene,
   Progress,
   AlterProgress,
-  Effect,
+  Renderable,
 
   Point,
   Line,

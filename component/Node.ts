@@ -1,9 +1,9 @@
 import Rect from '../base/Rect';
 import Point from '../core/Point';
 import Line from '../core/Line';
-import Shape from '../core/Shape';
+import InteractableShape from '../core/InteractableShape';
 
-class Port extends Shape {
+class Port extends InteractableShape {
   name: string;
   dir: string;
   nameFontSize: number;

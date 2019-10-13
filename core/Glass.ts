@@ -1,23 +1,21 @@
-import Event from './Event';
-
-export default class Glass extends Event {
+export default class Glass {
   subscribers: Function[];
-  extends: string = 'Glass';
   isMouseDown: boolean = false;
+  event: any;
 
-  constructor(public glass: any) {
-    super();
+  constructor(public wrapElement: any) {
     this.subscribers = [];
+    this.event = {};
   }
   setStyleSize(width: number, height: number) {
-    this.glass.style.width = `${width}px`;
-    this.glass.style.height = `${height}px`;
+    this.wrapElement.style.width = `${width}px`;
+    this.wrapElement.style.height = `${height}px`;
   }
   setAttrSize(width: number, height: number) {
-    this.glass.width = width * window.devicePixelRatio;
-    this.glass.height = height * window.devicePixelRatio;
+    this.wrapElement.width = width;
+    this.wrapElement.height = height;
   }
-  emitSubscribers(actor: Element | Glass) {
+  emitSubscribers(actor) {
     this.subscribers.forEach(subscriber => subscriber(actor))
   }
   subscribe(subscriber: Function) {

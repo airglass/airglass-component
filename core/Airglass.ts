@@ -1,30 +1,34 @@
 import Glass from './Glass';
 import Renderer from './Renderer';
 import RendererManager from './RendererManager';
-import Scene from './Scene';
+
+interface Bounds {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
 
 export default class Airglass extends Glass {
   rendererManager: RendererManager;
-  boundingClientRect: any;
+  bounds: Bounds;
 
-  constructor(glass: HTMLDivElement) {
-    super(glass);
-    this.rendererManager = new RendererManager(glass);
+  constructor(public wrapElement: HTMLDivElement, width: number, height: number) {
+    super(wrapElement);
+    this.rendererManager = new RendererManager(wrapElement);
     this._eventHandler = this._eventHandler.bind(this);
 
-  }
-  initSize(width: number, height: number) {
-    this.glass.style.position = 'relative';
+    this.wrapElement.style.position = 'relative';
     this.setStyleSize(width, height);
-    this.rendererManager.setAllSize(width, height);
+    this.bounds = this.getBounds();
 
-    this.updateBoundingClientRect();
+    // 默认可交互
+    this._setInteractable();
   }
   getScrollOffsets() {
-    let w = window;
     return {
-      x: w.pageXOffset,
-      y: w.pageYOffset,
+      x: window.pageXOffset,
+      y: window.pageYOffset,
     }
   }
   getViewportSize() {
@@ -34,50 +38,36 @@ export default class Airglass extends Glass {
       y: w.innerHeight,
     }
   }
-  getBoundingClientRect() {
-    let _ = this.glass.getBoundingClientRect();
-    return {
-      x: _.left,
-      y: _.top,
-      width: _.width || (_.right - _.left),
-      height: _.height || (_.bottom - _.top)
-    }
-  }
-  updateBoundingClientRect() {
-    this.boundingClientRect = this.getBoundingClientRect();
+  getBounds(): Bounds {
+    let bcr = this.wrapElement.getBoundingClientRect();
+    return this.bounds = {
+      x: bcr.left,
+      y: bcr.top,
+      width: bcr.width || (bcr.right - bcr.left),
+      height: bcr.height || (bcr.bottom - bcr.top)
+    };
   }
   addRenderer(rendererName): Renderer {
-    let renderer = new Renderer(
-      document.createElement('canvas').getContext('2d'),
-      new Scene()
-    );
+    let canvas = document.createElement('canvas')
+    let renderer = new Renderer(canvas.getContext('2d'));
+    renderer.setSize(this.bounds.width, this.bounds.height);
     renderer.name = rendererName;
-    this.glass.appendChild(renderer.ctx.canvas);
+    this.wrapElement.appendChild(canvas);
     return this.rendererManager.add(renderer)[0];
   }
-  setInteractable() {
-    let galss = this.glass;
-    galss.addEventListener('mousedown', this._eventHandler);
-    galss.addEventListener('touchstart', this._eventHandler);
-    galss.addEventListener('mousemove', this._eventHandler);
-    galss.addEventListener('touchmove', this._eventHandler);
-    galss.addEventListener('mouseup', this._eventHandler);
-    galss.addEventListener('touchend', this._eventHandler);
-    return this;
-  }
-  offInteractable() {
-    let galss = this.glass;
-    galss.removeEventListener('mousedown', this._eventHandler);
-    galss.removeEventListener('touchstart', this._eventHandler);
-    galss.removeEventListener('mousemove', this._eventHandler);
-    galss.removeEventListener('touchmove', this._eventHandler);
-    galss.removeEventListener('mouseup', this._eventHandler);
-    galss.removeEventListener('touchend', this._eventHandler);
+  _setInteractable() {
+    let el = this.wrapElement;
+    el.addEventListener('mousedown', this._eventHandler);
+    el.addEventListener('touchstart', this._eventHandler);
+    el.addEventListener('mousemove', this._eventHandler);
+    el.addEventListener('touchmove', this._eventHandler);
+    el.addEventListener('mouseup', this._eventHandler);
+    el.addEventListener('touchend', this._eventHandler);
     return this;
   }
   _eventHandler(e: any) {
     e.preventDefault();
-    this.event = { extends: this.extends };
+    this.event = {};
     let touch = e.touches && e.touches[0];
     switch (e.type) {
       case 'mousedown':
@@ -90,8 +80,8 @@ export default class Airglass extends Glass {
       case 'touchstart':
         this.event.interactor = 'finger';
         this.event.type = 'touchstart';
-        this.event.x = (touch.clientX - this.boundingClientRect.x) * devicePixelRatio;
-        this.event.y = (touch.clientY - this.boundingClientRect.y) * devicePixelRatio;
+        this.event.x = (touch.clientX - this.bounds.x) * devicePixelRatio;
+        this.event.y = (touch.clientY - this.bounds.y) * devicePixelRatio;
         console.log(this.event)
         break;
       case 'mousemove':
@@ -106,8 +96,8 @@ export default class Airglass extends Glass {
       case 'touchmove':
         this.event.interactor = 'finger';
         this.event.type = 'touchmove';
-        this.event.x = (touch.clientX - this.boundingClientRect.x) * devicePixelRatio;
-        this.event.y = (touch.clientY - this.boundingClientRect.y) * devicePixelRatio;
+        this.event.x = (touch.clientX - this.bounds.x) * devicePixelRatio;
+        this.event.y = (touch.clientY - this.bounds.y) * devicePixelRatio;
         break;
       case 'mouseup':
         this.event.interactor = 'mouse';
