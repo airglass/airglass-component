@@ -1,7 +1,6 @@
-import Rect from './Rect';
 import Point from '../core/Point';
-import Line from './Line';
 import InteractableShape from '../core/InteractableShape';
+import Renderable from '../core/Renderable';
 
 class Port extends InteractableShape {
   name: string;
@@ -10,13 +9,13 @@ class Port extends InteractableShape {
   margin: number;
   size: number;
 
-  constructor(opts) {
-    super(opts);
-    this.name = opts.name || '';
-    this.dir = opts.dir || 'LTR';
-    this.nameFontSize = opts.nameFontSize || 12;
-    this.size = opts.size || 10;
-    this.margin = opts.margin || this.size * 1.5;
+  constructor(params?) {
+    super(params);
+    this.name = params && params.name || '';
+    this.dir = params && params.dir || 'LTR';
+    this.nameFontSize = params && params.nameFontSize || 12;
+    this.size = params && params.size || 10;
+    this.margin = params && params.margin || this.size * 1.5;
   }
   updatePath() {
     let path: Path2D = new Path2D();
@@ -43,7 +42,7 @@ class Port extends InteractableShape {
   }
 }
 
-class NodeLine extends Line {
+class NodeLine extends Renderable {
   lightWidth: number = 20;
   lineLength: number = 0;
   currentT: number;
@@ -52,7 +51,7 @@ class NodeLine extends Line {
   tSpeed: number = 0;
 
   constructor(public startPoint: Point = new Point(0, 0), public endPoint: Point = new Point(0, 0)) {
-    super(startPoint, endPoint);
+    super();
     this.currentT = 0;
     this.updateBound();
   }
@@ -72,7 +71,6 @@ class NodeLine extends Line {
     let path: Path2D = new Path2D();
     path.moveTo(this.startPoint.x, this.startPoint.y);
     path.bezierCurveTo(c1.x, c1.y, c2.x, c2.y, this.endPoint.x, this.endPoint.y);
-    this.path = path;
   }
   updateBound() {
     this.boundWidth = this.endPoint.x - this.startPoint.x;
@@ -93,7 +91,7 @@ class NodeLine extends Line {
   }
 }
 
-export default class Node extends Rect {
+export default class Node extends InteractableShape {
   imports: Array<Port>;
   exports: Array<Port>;
   name: string;
@@ -101,23 +99,26 @@ export default class Node extends Rect {
   nameFontSize: number;
   r: number;
   nameBarHeight: number;
+  width: number;
+  height: number;
+  constructor(params?: any) {
+    super(params);
 
-  constructor(opts: any) {
-    super(opts);
-
-    this.imports = opts.imports || [];
-    this.exports = opts.exports || [];
-    this.name = opts.name || '';
-    this.nameFill = opts.nameFill || '#fff';
-    this.nameFontSize = opts.nameFontSize || 12;
-    this.r = opts.r * devicePixelRatio || 2 * devicePixelRatio;
-    this.nameBarHeight = opts.nameBarHeight || 40;
+    this.width = 0;
+    this.height = 0;
+    this.imports = params && params.imports || [];
+    this.exports = params && params.exports || [];
+    this.name = params && params.name || '';
+    this.nameFill = params && params.nameFill || '#fff';
+    this.nameFontSize = params && params.nameFontSize || 12;
+    this.r = (params && params.r || 2) * devicePixelRatio;
+    this.nameBarHeight = params && params.nameBarHeight || 40;
   }
   static createNodeLine(startPoint, endPoint) {
     return new NodeLine(startPoint, endPoint);
   }
-  static createPort(opts) {
-    return new Port(opts);
+  static createPort(params?) {
+    return new Port(params);
   }
   updatePath() {
     let path: Path2D = new Path2D;
@@ -144,7 +145,6 @@ export default class Node extends Rect {
     ctx.strokeStyle = this.stroke;
     ctx.lineWidth = this.line;
     ctx.stroke(this.path);
-
 
     let path = new Path2D;
     path.rect(this.x, this.y, this.width, this.nameBarHeight);

@@ -1,7 +1,7 @@
 import Progress from './Progress';
 
 export default class AlterProgress extends Progress {
-  constructor(startValue, endValue, t?, step?) {
+  constructor(startValue?, endValue?, t?, step?) {
     super(startValue, endValue, t, step);
   }
   getValue(t) {

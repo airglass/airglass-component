@@ -4,7 +4,7 @@ export default class Keyframes {
   frameHeight: any;
   frameCounts: any;
   sprite: HTMLCanvasElement;
-  currentFrameNumber: any;
+  currentFrameIndex: any;
   initialized: boolean;
 
   constructor() {
@@ -43,22 +43,24 @@ export default class Keyframes {
     this.frameWidth = frames[0].width;
     this.frameHeight = frames[0].height;
     this.frameCounts = frames.length;
-    this.currentFrameNumber = 1;
+    this.currentFrameIndex = 0;
   }
-  setFrameNumber(frameNumber) {
-    if (frameNumber < 1) frameNumber = 1;
-    if (frameNumber > this.frameCounts) frameNumber = this.frameCounts;
-    this.currentFrameNumber = frameNumber;
+  setFrameIndex(frameIndex) {
+    if (frameIndex < 0) frameIndex = 0;
+    if (frameIndex >= this.frameCounts) frameIndex = this.frameCounts-1;
+    this.currentFrameIndex = frameIndex;
   }
-  updateFrame(frameNumber, processor) {
-    if (frameNumber >= 1 && frameNumber <= this.frameCounts) {
-      processor(this.frames[frameNumber - 1].getContext('2d'));
+  updateFrames(frameWidth, frameHeight, frameCounts, frameProcessor) {
+    let frames = Keyframes.generateEmptyFrames(frameWidth, frameHeight, frameCounts);
+    this.setFrames(frames);
+    for (let i = 0; i < frameCounts; i++) {
+      frameProcessor(i, this.frames[i].getContext('2d'));
     }
   }
-  drawFrame(ctx, renderX, renderY) {
-    ctx.drawImage(this.frames[this.currentFrameNumber - 1], renderX, renderY);
-    this.currentFrameNumber++;
-    if (this.currentFrameNumber > this.frameCounts) this.currentFrameNumber = 1;
+  drawFrame(ctx, drawX, drawY) {
+    ctx.drawImage(this.frames[this.currentFrameIndex], drawX, drawY);
+    this.currentFrameIndex++;
+    if (this.currentFrameIndex >= this.frameCounts) this.currentFrameIndex = 0;
   }
   updateSprite() {
     let sprite = this.sprite;

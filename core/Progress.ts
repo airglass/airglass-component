@@ -5,12 +5,12 @@ export default class Progress {
   step: number;
   value: number;
   valueLength: number;
-  constructor(startValue, endValue, t, step) {
+  constructor(startValue?, endValue?, t?, step?) {
     this.value = this.startValue = startValue || 0;
     this.endValue = endValue || 1;
     (t >= 0 && t <= 1) ? (this.t = t) : (this.t = 0);
     this.step = step || 0.1;
-    this.valueLength = endValue - startValue;
+    this.valueLength = this.endValue - this.startValue;
   }
   getValue(t) {
     return this.startValue + this.valueLength * t;

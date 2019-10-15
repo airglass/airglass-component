@@ -16,7 +16,7 @@ import PolyLine from './component/PolyLine';
 import Avatar from './component/Avatar';
 
 // 效果类
-import RadarWave from './effects/RadarWave';
+import RadarWave from './component/RadarWave';
 
 // 工具函数
 import min from './utils/min';
