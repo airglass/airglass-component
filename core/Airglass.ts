@@ -1,17 +1,10 @@
 import Glass from './Glass';
 import Renderer from './Renderer';
 import RendererManager from './RendererManager';
-
-interface Bounds {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}
+import { Bounds } from './Renderable';
 
 export default class Airglass extends Glass {
   rendererManager: RendererManager;
-  bounds: Bounds;
 
   constructor(public wrapElement: HTMLDivElement, width: number, height: number) {
     super(wrapElement);
@@ -22,7 +15,6 @@ export default class Airglass extends Glass {
     this.setStyleSize(width, height);
     this.bounds = this.getBounds();
 
-    // 默认可交互
     this._setInteractable();
   }
   getScrollOffsets() {

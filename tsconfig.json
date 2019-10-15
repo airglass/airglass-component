@@ -10,7 +10,7 @@
   "typedocOptions": {
     "mode": "file",
     "out": "../web/airglass/typedoc/",
-    "name": "Airglass.js 官方文档",
+    "name": "Airglass.js官方文档.alpha",
     "readme": "none",
     "theme": "minimal"
   }

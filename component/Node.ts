@@ -1,6 +1,6 @@
-import Rect from '../base/Rect';
+import Rect from './Rect';
 import Point from '../core/Point';
-import Line from '../core/Line';
+import Line from './Line';
 import InteractableShape from '../core/InteractableShape';
 
 class Port extends InteractableShape {

@@ -1,15 +1,14 @@
 import Glass from './Glass';
 import Point from './Point';
-import Scene from './Scene';
+import Group from './Group';
 
 export default class Renderer extends Glass {
-  name: string = 'unnamed';
-  scene: Scene;
+  name: any;
+  scene: Group;
 
   constructor(public ctx: any) {
     super(ctx.canvas);
-    this.scene = new Scene();
-    if (!ctx) throw new Error('please check parameter');
+    this.scene = new Group();
   }
   setSize(width: number, height: number) {
     this.wrapElement.style.position = 'absolute';

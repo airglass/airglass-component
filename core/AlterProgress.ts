@@ -4,7 +4,6 @@ export default class AlterProgress extends Progress {
   constructor(startValue, endValue, t?, step?) {
     super(startValue, endValue, t, step);
   }
-  // 重写Progress的getValue()方法
   getValue(t) {
     let value;
     if (t >= 0 && t < 0.5) {

@@ -1,9 +1,12 @@
-export default class Glass {
+import Renderable from './Renderable';
+
+export default class Glass extends Renderable {
   subscribers: Function[];
   isMouseDown: boolean = false;
   event: any;
 
   constructor(public wrapElement: any) {
+    super();
     this.subscribers = [];
     this.event = {};
   }
@@ -20,13 +23,5 @@ export default class Glass {
   }
   subscribe(subscriber: Function) {
     this.subscribers.push(subscriber);
-  }
-  unSubscribe(subscriber: Function) {
-    for (let i = 0; i < this.subscribers.length; i++) {
-      let _subscriber: Function = this.subscribers[i];
-      if (_subscriber === subscriber) {
-        this.subscribers.splice(i, 1);
-      }
-    }
   }
 }

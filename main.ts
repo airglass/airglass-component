@@ -1,17 +1,13 @@
 // 核心
 import Airglass from './core/Airglass';
-import Renderer from './core/Renderer';
-import Scene from './core/Scene';
-import Point from './core/Point';
-import Line from './core/Line';
-import Progress from './core/Progress';
-import AlterProgress from './core/AlterProgress';
 import Renderable from './core/Renderable';
-
-// 基础形状类
-import Circle from './base/Circle';
-import Ellipse from './base/Ellipse';
-import Rect from './base/Rect';
+import AlterProgress from './core/AlterProgress';
+import Progress from './core/Progress';
+import Point from './core/Point';
+import Line from './component/Line';
+import Circle from './component/Circle';
+import Ellipse from './component/Ellipse';
+import Rect from './component/Rect';
 
 // 组件类
 import Node from './component/Node';
@@ -34,8 +30,6 @@ let utils = {
 
 export {
   Airglass,
-  Renderer,
-  Scene,
   Progress,
   AlterProgress,
   Renderable,
