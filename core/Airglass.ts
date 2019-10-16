@@ -32,12 +32,13 @@ export default class Airglass extends Glass {
   }
   getBounds(): Bounds {
     let bcr = this.wrapElement.getBoundingClientRect();
-    return this.bounds = {
-      x: bcr.left,
-      y: bcr.top,
-      width: bcr.width || (bcr.right - bcr.left),
-      height: bcr.height || (bcr.bottom - bcr.top)
-    };
+    let x = bcr.left;
+    let y = bcr.top;
+    let width = bcr.width || (bcr.right - bcr.left);
+    let height = bcr.height || (bcr.bottom - bcr.top);
+    let centerX = x + width/2;
+    let centerY = y + height/2;
+    return this.bounds = {x, y, centerX, centerY, width, height};
   }
   addRenderer(rendererName): Renderer {
     let canvas = document.createElement('canvas')

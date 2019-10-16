@@ -1,5 +1,4 @@
 import Glass from './Glass';
-import Point from './Point';
 import Group from './Group';
 
 export default class Renderer extends Glass {
@@ -31,7 +30,7 @@ export default class Renderer extends Glass {
     this.clear();
     return this.render();
   }
-  getElementsContainPoint(point: Point) {
+  getElementsContainPoint(point) {
     return this.scene.children.map(el => {
       let inPath = this.ctx.isPointInPath(el.path, point.x, point.y);
       if (inPath) return el;

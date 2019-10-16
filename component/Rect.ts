@@ -4,11 +4,10 @@ export default class Rect extends InteractableShape {
   width: number;
   height: number;
   
-  constructor(opts: any){
-    super(opts);
-
-    this.width = opts.width || 100;
-    this.height = opts.height || 100;
+  constructor(params?: any){
+    super(params);
+    this.width = params && params.width || 100;
+    this.height = params && params.height || 100;
   }
   updatePath(){
     let path: Path2D = new Path2D();

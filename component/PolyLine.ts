@@ -1,10 +1,9 @@
-import Point from '../core/Point';
 import min from '../utils/min';
 import max from '../utils/max';
 import Renderable from '../core/Renderable';
 
 export default class PolyLine extends Renderable {
-  points: Array<Point>;
+  points: Array<any>;
   stroke: any;
   line: number;
 
@@ -38,7 +37,7 @@ export default class PolyLine extends Renderable {
       let path: Path2D = new Path2D;
       let halfLine = this.line / 2;
       for (let i = 0; i < this.points.length; i++) {
-        let point: Point = this.points[i];
+        let point = this.points[i];
         let x = point.x - minX + halfLine;
         let y = point.y - minY + halfLine;
         if (i == 0) {
@@ -56,7 +55,7 @@ export default class PolyLine extends Renderable {
 
     this.keyframes.initialized = true;
   }
-  addPoint(point: Point) {
+  addPoint(point) {
     this.points.push(point);
     this._init();
   }
