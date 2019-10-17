@@ -1,22 +1,23 @@
-import Renderable from './Renderable';
-
-export default class Glass extends Renderable {
+export default class Glass {
   subscribers: Function[];
   isMouseDown: boolean = false;
   event: any;
+  DPR: number;
+  element: any;
 
-  constructor(public wrapElement: any) {
-    super();
+  constructor(params) {
+    this.element = params.element;
     this.subscribers = [];
     this.event = {};
+    this.DPR = params.DPR || window.devicePixelRatio;
   }
   setStyleSize(width: number, height: number) {
-    this.wrapElement.style.width = `${width}px`;
-    this.wrapElement.style.height = `${height}px`;
+    this.element.style.width = `${width}px`;
+    this.element.style.height = `${height}px`;
   }
   setAttrSize(width: number, height: number) {
-    this.wrapElement.width = width;
-    this.wrapElement.height = height;
+    this.element.width = width;
+    this.element.height = height;
   }
   emitSubscribers(actor) {
     this.subscribers.forEach(subscriber => subscriber(actor))

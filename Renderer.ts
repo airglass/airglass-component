@@ -5,24 +5,26 @@ export default class Renderer extends Glass {
   name: any;
   scene: Group;
 
-  constructor(public ctx: any) {
-    super(ctx.canvas);
+  constructor(params) {
+    super(params);
     this.scene = new Group();
   }
   setSize(width: number, height: number) {
-    this.wrapElement.style.position = 'absolute';
-    this.wrapElement.style.top = 0;
-    this.wrapElement.style.left = 0;
-    this.setAttrSize(width * window.devicePixelRatio, height * window.devicePixelRatio);
+    this.element.style.position = 'absolute';
+    this.element.style.top = 0;
+    this.element.style.left = 0;
+    this.setAttrSize(width * this.DPR, height * this.DPR);
     this.setStyleSize(width, height);
   }
   clear() {
-    this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+    let ctx = this.element.getContext('2d');
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     return this;
   }
   render() {
+    let ctx = this.element.getContext('2d');
     for (let child of this.scene.children) {
-      child.draw && child.draw(this.ctx);
+      child.draw && child.draw(ctx);
     }
     return this;
   }
@@ -31,8 +33,9 @@ export default class Renderer extends Glass {
     return this.render();
   }
   getElementsContainPoint(point) {
+    let ctx = this.element.getContext('2d');
     return this.scene.children.map(el => {
-      let inPath = this.ctx.isPointInPath(el.path, point.x, point.y);
+      let inPath = ctx.isPointInPath(el.path, point.x, point.y);
       if (inPath) return el;
       return;
     }).filter(el => el);
