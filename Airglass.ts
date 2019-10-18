@@ -47,7 +47,8 @@ export default class Airglass extends Glass {
   addRenderer(rendererName): Renderer {
     let canvas = document.createElement('canvas')
     let renderer = new Renderer({
-      element: canvas
+      element: canvas,
+      DPR: this.DPR
     });
     renderer.setSize(this.bounds.width, this.bounds.height);
     renderer.name = rendererName;
