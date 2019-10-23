@@ -6,8 +6,8 @@ export default class Renderable {
   stroke: any;
   constructor(params?: any) {
     this.line = params && params.line || 1;
-    this.fill = params && params.fill || 0xffffff;
-    this.stroke = params && params.stroke || 0xffffff;
+    this.fill = params && params.fill || '#fff';
+    this.stroke = params && params.stroke || '#111';
     this.userData = {};
   }
   init(){}

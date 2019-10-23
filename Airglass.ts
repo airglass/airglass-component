@@ -1,9 +1,9 @@
 import Glass from './Glass';
 import Renderer from './Renderer';
-import RendererManager from './RendererManager';
+import Group from './Group';
 
 export default class Airglass extends Glass {
-  rendererManager: RendererManager;
+  rendererManager: Group;
   bounds: any;
   width: number;
   height: number;
@@ -12,7 +12,7 @@ export default class Airglass extends Glass {
     super(params);
     this.width = params.width || 300;
     this.height = params.height || 150;
-    this.rendererManager = new RendererManager(this.element);
+    this.rendererManager = new Group();
     this._eventHandler = this._eventHandler.bind(this);
 
     this.element.style.position = 'relative';
