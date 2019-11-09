@@ -19,8 +19,8 @@ export default class Glass {
     this.element.width = width;
     this.element.height = height;
   }
-  emitSubscribers(actor) {
-    this.subscribers.forEach(subscriber => subscriber(actor))
+  emitSubscribers(event, originEvent) {
+    this.subscribers.forEach(subscriber => subscriber(event, originEvent))
   }
   subscribe(subscriber: Function) {
     this.subscribers.push(subscriber);

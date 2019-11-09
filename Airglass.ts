@@ -109,6 +109,6 @@ export default class Airglass extends Glass {
         this.event.type = 'touchend';
         break
     }
-    this.emitSubscribers(this.event);
+    this.emitSubscribers(this.event, e);
   }
 }
