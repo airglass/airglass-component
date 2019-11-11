@@ -66,7 +66,6 @@ export default class Airglass extends Glass {
     return this;
   }
   _eventHandler(e: any) {
-    e.preventDefault();
     this.event = {};
     let touch = e.touches && e.touches[0];
     switch (e.type) {
@@ -82,7 +81,6 @@ export default class Airglass extends Glass {
         this.event.type = 'touchstart';
         this.event.x = (touch.clientX - this.bounds.x) * this.DPR;
         this.event.y = (touch.clientY - this.bounds.y) * this.DPR;
-        console.log(this.event)
         break;
       case 'mousemove':
         this.event.interactor = 'mouse';
