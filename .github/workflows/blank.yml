@@ -10,6 +10,4 @@ jobs:
     steps:
     - name: check env
       run: |
-        ls -la
-        npm -v
-      
+        pwd
