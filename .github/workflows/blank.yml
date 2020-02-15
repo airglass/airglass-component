@@ -8,6 +8,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: check env
-      run: |
-        pwd
+    - name: Checkout
+      uses: actions/checkout@v2.0.0
+    - name: list all
+      run: ls -la
+    - name: pwd
+      run: pwd
