@@ -8,5 +8,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: ESLint Action
-      uses: hallee/eslint-action@1.0.1
+    - name: check env
+      run: |
+        node -v
+        npm -v
+      
