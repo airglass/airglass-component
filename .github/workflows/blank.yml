@@ -1,8 +1,6 @@
 name: CI
 
-on: 
-  schedule:
-    - cron: '*/15 * * * *'
+on: push
 
 jobs:
   build:
@@ -12,6 +10,6 @@ jobs:
     steps:
     - name: check env
       run: |
-        node -v
+        ls -la
         npm -v
       
