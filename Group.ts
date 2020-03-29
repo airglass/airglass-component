@@ -17,4 +17,13 @@ export default class Group {
       }
     }
   }
+  get(name) {
+    const children: any = [];
+    for (let child of this.children) {
+      if (child.name && child.name === name) {
+        children.push(child);
+      }
+    }
+    return children;
+  }
 }

@@ -4,7 +4,7 @@ module.exports = {
   "pages": [{
     "input": "main.ts",
     "output": {
-      "filename": "../www/app/public/lib/airglass"
+      "filename": "../www/public/lib/airglass"
     }
   }]
 }

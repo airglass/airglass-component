@@ -17,6 +17,10 @@ function extend(extendedGlass, prototype) {
   return Glass;
 }
 
+console.info(`Airglass.js
+Email: lanserdi@163.com
+Doc: https://www.shuaihuajun.com/airglass/typedoc/`);
+
 export {
   Airglass,
   Progress,
