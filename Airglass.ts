@@ -63,6 +63,8 @@ export default class Airglass extends Glass {
     el.addEventListener('touchmove', this._eventHandler);
     el.addEventListener('mouseup', this._eventHandler);
     el.addEventListener('touchend', this._eventHandler);
+    el.addEventListener('mouseover', this._eventHandler);
+    el.addEventListener('mouseout', this._eventHandler);
     return this;
   }
   _eventHandler(e: any) {
@@ -105,6 +107,13 @@ export default class Airglass extends Glass {
       case 'touchend':
         this.event.interactor = 'finger';
         this.event.type = 'touchend';
+      case 'mouseover':
+        this.event.interactor = 'mouse';
+        this.event.type = 'mouseover';
+        break;
+      case 'mouseout':
+        this.event.interactor = 'mouse';
+        this.event.type = 'mouseout';
         break
     }
     this.emitSubscribers(this.event, e);
